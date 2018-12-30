@@ -1,4 +1,5 @@
 #pragma once
 
 #include <iostream>
-#include <assimp/Importer.hpp>
+
+#include "../stl_reader/stl_reader.h"
