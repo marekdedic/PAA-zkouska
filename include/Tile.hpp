@@ -4,7 +4,9 @@ class Row;
 
 class Tile
 {
-	Direction operator[](const int index) const;
+public:
+	Direction* begin() const;
+	Direction* end() const;
 private:
 	friend Row;
 
