@@ -11,11 +11,15 @@ set(HEADER_FILES
 	stl_reader/stl_reader.h
 	include/main.hpp
 	include/global.hpp
-		include/Lattice.hpp)
+	include/Lattice.hpp
+	include/RowSelector.hpp
+)
 
 set(SOURCE_FILES
 	src/main.cpp
-	src/Lattice.cpp)
+	src/Lattice.cpp
+	src/RowSelector.cpp
+)
 
 add_executable(PAA ${HEADER_FILES} ${SOURCE_FILES})
 
