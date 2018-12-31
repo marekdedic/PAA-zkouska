@@ -8,14 +8,14 @@ set(WARNINGS "-Wall -Weffc++ -pedantic -Wextra -Wcast-align -Wcast-qual -Wchar-s
 include_directories(include)
 
 set(HEADER_FILES
+	stl_reader/stl_reader.h
 	include/main.hpp
 	include/global.hpp
-	stl_reader/stl_reader.h
-)
+		include/Lattice.hpp)
 
 set(SOURCE_FILES
 	src/main.cpp
-)
+	src/Lattice.cpp)
 
 add_executable(PAA ${HEADER_FILES} ${SOURCE_FILES})
 
