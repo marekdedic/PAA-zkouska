@@ -1,15 +1,15 @@
 #pragma once
 
-class RowSelector;
+class Row;
 
 class Tile
 {
 	Direction operator[](const int index) const;
 private:
-	friend RowSelector;
+	friend Row;
 
-	const RowSelector* row;
+	const Row* row;
 	const int column;
 
-	Tile(const RowSelector* row, const int column);
+	Tile(const Row* row, const int column);
 };

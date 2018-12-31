@@ -2,7 +2,7 @@
 
 class Lattice;
 
-class RowSelector
+class Row
 {
 public:
 	Tile operator[](const int index) const;
@@ -12,5 +12,5 @@ private:
 	const Lattice* lattice;
 	const int row;
 
-	RowSelector(const Lattice* lattice, const int row);
+	Row(const Lattice* lattice, const int row);
 };

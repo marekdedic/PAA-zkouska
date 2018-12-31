@@ -12,7 +12,7 @@ set(HEADER_FILES
 	include/main.hpp
 	include/global.hpp
 	include/Lattice.hpp
-	include/RowSelector.hpp
+	include/Row.hpp
 	include/Tile.hpp
 	include/Direction.hpp
 )
@@ -20,7 +20,7 @@ set(HEADER_FILES
 set(SOURCE_FILES
 	src/main.cpp
 	src/Lattice.cpp
-	src/RowSelector.cpp
+	src/Row.cpp
 	src/Tile.cpp
 	src/Direction.cpp
 )

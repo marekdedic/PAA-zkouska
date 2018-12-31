@@ -4,5 +4,5 @@
 
 #include "Direction.hpp"
 #include "Tile.hpp"
-#include "RowSelector.hpp"
+#include "Row.hpp"
 #include "Lattice.hpp"
