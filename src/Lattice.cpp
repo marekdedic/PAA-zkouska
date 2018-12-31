@@ -30,7 +30,12 @@ const int Lattice::getHeight() const
 	return static_cast<int>(round(this->yMax - this->yMin / this->tileSize));
 }
 
-RowSelector Lattice::operator[](int index) const
+RowSelector* Lattice::begin() const
 {
-	return RowSelector{this, index};
+	return new RowSelector{this, 0};
+}
+
+RowSelector* Lattice::end() const
+{
+	return new RowSelector{this, this->getWidth()};
 }
