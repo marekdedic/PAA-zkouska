@@ -4,6 +4,8 @@ class Tile;
 
 class Direction
 {
+public:
+	const std::array<float, 3> getVec() const;
 private:
 	friend Tile;
 
