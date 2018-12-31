@@ -4,7 +4,7 @@ class RowSelector;
 
 class Tile
 {
-
+	Direction operator[](const int index) const;
 private:
 	friend RowSelector;
 
