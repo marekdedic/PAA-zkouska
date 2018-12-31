@@ -5,7 +5,8 @@ class Lattice;
 class Row
 {
 public:
-	Tile operator[](const int index) const;
+	Tile* begin() const;
+	Tile* end() const;
 private:
 	friend Lattice;
 
