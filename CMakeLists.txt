@@ -13,12 +13,14 @@ set(HEADER_FILES
 	include/global.hpp
 	include/Lattice.hpp
 	include/RowSelector.hpp
+	include/Tile.hpp
 )
 
 set(SOURCE_FILES
 	src/main.cpp
 	src/Lattice.cpp
 	src/RowSelector.cpp
+	src/Tile.cpp
 )
 
 add_executable(PAA ${HEADER_FILES} ${SOURCE_FILES})

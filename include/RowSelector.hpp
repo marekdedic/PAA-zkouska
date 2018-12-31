@@ -5,7 +5,7 @@ class Lattice;
 class RowSelector
 {
 public:
-	//const Tile operator[](int index) const;
+	Tile operator[](int index) const;
 private:
 	friend Lattice;
 
