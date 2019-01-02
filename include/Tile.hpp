@@ -5,13 +5,19 @@ class Row;
 class Tile
 {
 public:
-	Direction* begin() const;
-	Direction* end() const;
+	Tile() = delete;
+	Tile(const Tile&) = default;
+	Tile& operator=(const Tile&) = delete;
+	Direction begin() const;
+	Direction end() const;
+	const bool operator!=(const Tile& other) const;
+	Tile* operator++();
+	Tile& operator*();
 private:
 	friend Row;
 
 	const Row* row;
-	const int column;
+	int column;
 
 	Tile(const Row* row, const int column);
 };

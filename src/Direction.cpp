@@ -57,6 +57,24 @@ const std::array<float, 3> Direction::getVec() const
 		case 25:
 			return {1, 1, 1};
 	}
+	std::cerr << "Invalid direction." << std::endl;
+	return {0, 0, 0};
+}
+
+const bool Direction::operator!=(const Direction& other) const
+{
+	return this->tile != other.tile || this->direction != other.direction;
+}
+
+Direction* Direction::operator++()
+{
+	++this->direction;
+	return this;
+}
+
+Direction& Direction::operator*()
+{
+	return *this;
 }
 
 Direction::Direction(const Tile *tile, const int direction) : tile{tile}, direction{direction}

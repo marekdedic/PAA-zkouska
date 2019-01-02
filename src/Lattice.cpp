@@ -30,12 +30,12 @@ const int Lattice::getHeight() const
 	return static_cast<int>(round(this->yMax - this->yMin / this->tileSize));
 }
 
-Row* Lattice::begin() const
+Row Lattice::begin() const
 {
-	return new Row{this, 0};
+	return Row{this, 0};
 }
 
-Row* Lattice::end() const
+Row Lattice::end() const
 {
-	return new Row{this, this->getWidth()};
+	return Row{this, this->getWidth()};
 }

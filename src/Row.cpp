@@ -1,13 +1,29 @@
 #include "main.hpp"
 
-Tile* Row::begin() const
+Tile Row::begin() const
 {
-	return new Tile{this, 0};
+	return Tile{this, 0};
 }
 
-Tile* Row::end() const
+Tile Row::end() const
 {
-	return new Tile{this, this->lattice->getHeight()};
+	return Tile{this, this->lattice->getHeight()};
+}
+
+const bool Row::operator!=(const Row& other) const
+{
+	return this->lattice != other.lattice || this->row != other.row;
+}
+
+Row* Row::operator++()
+{
+	++this->row;
+	return this;
+}
+
+Row& Row::operator*()
+{
+	return *this;
 }
 
 Row::Row(const Lattice* lattice, const int index) : lattice{lattice}, row{index}
