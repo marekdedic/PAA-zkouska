@@ -1,5 +1,24 @@
 #include "main.hpp"
 
+vec vecMinus(vec a, vec b)
+{
+	return {a[0] - b[0], a[1] - b[1], a[2] - b[2]};
+}
+float scalarProduct(vec a, vec b)
+{
+	return a[0] * b[0] + a[1] * b[1] + a[2] * b[2];
+}
+
+float intersect(vec planePoint, vec linePoint, vec planeNormal, vec lineVec)
+{
+	float denominator{scalarProduct(lineVec, planeNormal)};
+	if(denominator == 0)
+	{
+		return 0;
+	}
+	return scalarProduct(vecMinus(planePoint, linePoint), planeNormal);
+}
+
 int main()
 {
 	stl_reader::StlMesh mesh{"teapot.stl"};

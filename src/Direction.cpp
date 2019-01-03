@@ -1,6 +1,6 @@
 #include "main.hpp"
 
-const std::array<float, 3> Direction::getVec() const
+const vec Direction::getVec() const
 {
 	switch(this->direction)
 	{

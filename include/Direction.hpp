@@ -8,10 +8,11 @@ public:
 	Direction() = delete;
 	Direction(const Direction&) = default;
 	Direction& operator=(const Direction&) = delete;
-	const std::array<float, 3> getVec() const;
 	const bool operator!=(const Direction& other) const;
 	Direction* operator++();
 	Direction& operator*();
+
+	const vec getVec() const;
 private:
 	friend Tile;
 

@@ -8,11 +8,11 @@ public:
 	Row() = delete;
 	Row(const Row&) = default;
 	Row& operator=(const Row&) = delete;
-	Tile begin() const;
-	Tile end() const;
 	const bool operator!=(const Row& other) const;
 	Row* operator++();
 	Row& operator*();
+	Tile begin() const;
+	Tile end() const;
 private:
 	friend Lattice;
 
