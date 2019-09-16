@@ -56,9 +56,10 @@ const vec Direction::getVec() const
 			return {1, 1, 0};
 		case 25:
 			return {1, 1, 1};
+		default:
+			std::cerr << "Invalid direction." << std::endl;
+			return {0, 0, 0};
 	}
-	std::cerr << "Invalid direction." << std::endl;
-	return {0, 0, 0};
 }
 
 const bool Direction::operator!=(const Direction& other) const
