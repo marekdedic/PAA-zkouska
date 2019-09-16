@@ -7,7 +7,7 @@ Tile Row::begin() const
 
 Tile Row::end() const
 {
-	return Tile{this, this->lattice->getHeight()};
+	return Tile{this, this->lattice->getNumRows()};
 }
 
 const bool Row::operator!=(const Row& other) const

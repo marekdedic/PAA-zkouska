@@ -10,8 +10,8 @@ public:
 	Row begin() const;
 	Row end() const;
 
-	const int getWidth() const;
-	const int getHeight() const;
+	const int getNumCols() const;
+	const int getNumRows() const;
 private:
 	const float xMin;
 	const float yMin;

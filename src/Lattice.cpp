@@ -20,12 +20,12 @@ Lattice::Lattice(float xMin, float yMin, float xMax, float yMax, float tileSize)
 	check(this->yMin, this->yMax, 'y');
 }
 
-const int Lattice::getWidth() const
+const int Lattice::getNumCols() const
 {
 	return static_cast<int>(round(this->xMax - this->xMin / this->tileSize));
 }
 
-const int Lattice::getHeight() const
+const int Lattice::getNumRows() const
 {
 	return static_cast<int>(round(this->yMax - this->yMin / this->tileSize));
 }
@@ -37,5 +37,5 @@ Row Lattice::begin() const
 
 Row Lattice::end() const
 {
-	return Row{this, this->getWidth()};
+	return Row{this, this->getNumCols()};
 }
