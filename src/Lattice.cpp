@@ -1,6 +1,6 @@
 #include "main.hpp"
 
-Lattice::Lattice(float xMin, float yMin, float xMax, float yMax, float tileSize) : xMin{xMin}, yMin{yMin}, xMax{xMax}, yMax{yMax}, tileSize{tileSize}
+Lattice::Lattice(float xMin, float xMax, float yMin, float yMax, float zMin, float zMax, float tileSize) : xMin{xMin}, xMax{xMax}, yMin{yMin}, yMax{yMax}, zMin{zMin}, zMax{zMax}, tileSize{tileSize}
 {
 	auto check{[this](float min, float max, char dim)
 	{
@@ -18,16 +18,22 @@ Lattice::Lattice(float xMin, float yMin, float xMax, float yMax, float tileSize)
 	}};
 	check(this->xMin, this->xMax, 'x');
 	check(this->yMin, this->yMax, 'y');
-}
-
-const int Lattice::getNumCols() const
-{
-	return static_cast<int>(round(this->xMax - this->xMin / this->tileSize));
+	check(this->zMin, this->zMax, 'z');
 }
 
 const int Lattice::getNumRows() const
 {
+	return static_cast<int>(round(this->xMax - this->xMin / this->tileSize));
+}
+
+const int Lattice::getNumCols() const
+{
 	return static_cast<int>(round(this->yMax - this->yMin / this->tileSize));
+}
+
+const int Lattice::getNumLayers() const
+{
+	return static_cast<int>(round(this->zMax - this->zMin / this->tileSize));
 }
 
 const float Lattice::getTileSize() const
@@ -45,12 +51,12 @@ const float Lattice::getYMin() const
 	return this->yMin;
 }
 
-Row Lattice::begin() const
+Layer Lattice::begin() const
 {
-	return Row{this, 0};
+	return Layer{this, 0};
 }
 
-Row Lattice::end() const
+Layer Lattice::end() const
 {
-	return Row{this, this->getNumCols()};
+	return Layer{this, this->getNumLayers()};
 }

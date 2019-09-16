@@ -32,18 +32,21 @@ int main()
 		std::cerr << "Only STL files with 1 solid are supported" << std::endl;
 		return -1;
 	}
-	const Lattice lattice{-15, -15, 15, 15, 1};
-	for(auto row : lattice)
+	const Lattice lattice{-15, 15, -15, 15, -15, 15, 1};
+	for(auto slice: lattice)
 	{
-		for(auto tile : row)
+		for(auto row : slice)
 		{
-			for(auto direction : tile)
+			for(auto tile : row)
 			{
-				std::array v{direction.getVec()};
-				std::cout << v[0] << " " << v[1] << " " << v[2] << std::endl;
-				for(size_t i{1};i < mesh.num_tris(); ++i)
+				for(auto direction : tile)
 				{
-					std::cout << intersect(StlToVec(mesh.tri_corner_coords(i, 0)), tile.getCenter(), StlToVec(mesh.tri_normal(i)), direction.getVec()) << std::endl;
+					std::array v{direction.getVec()};
+					std::cout << v[0] << " " << v[1] << " " << v[2] << std::endl;
+					for(size_t i{1};i < mesh.num_tris(); ++i)
+					{
+						std::cout << intersect(StlToVec(mesh.tri_corner_coords(i, 0)), tile.getCenter(), StlToVec(mesh.tri_normal(i)), direction.getVec()) << std::endl;
+					}
 				}
 			}
 		}

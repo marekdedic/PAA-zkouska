@@ -1,6 +1,6 @@
 #pragma once
 
-class Lattice;
+class Layer;
 
 class Row
 {
@@ -13,13 +13,13 @@ public:
 	Row& operator*();
 	Tile begin() const;
 	Tile end() const;
-	const Lattice* getLattice() const;
+	const Layer* getLayer() const;
 	const int getRow() const;
 private:
-	friend Lattice;
+	friend Layer;
 
-	const Lattice* lattice;
+	const Layer* layer;
 	int row;
 
-	Row(const Lattice* lattice, const int row);
+	Row(const Layer* lattice, const int row);
 };

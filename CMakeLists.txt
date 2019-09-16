@@ -15,6 +15,7 @@ set(HEADER_FILES
 	include/Row.hpp
 	include/Tile.hpp
 	include/Direction.hpp
+		include/Layer.hpp
 )
 
 set(SOURCE_FILES
@@ -23,6 +24,7 @@ set(SOURCE_FILES
 	src/Row.cpp
 	src/Tile.cpp
 	src/Direction.cpp
+		src/Layer.cpp
 )
 
 add_executable(PAA ${HEADER_FILES} ${SOURCE_FILES})

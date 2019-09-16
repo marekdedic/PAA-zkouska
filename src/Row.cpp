@@ -1,18 +1,8 @@
 #include "main.hpp"
 
-Tile Row::begin() const
-{
-	return Tile{this, 0};
-}
-
-Tile Row::end() const
-{
-	return Tile{this, this->lattice->getNumRows()};
-}
-
 const bool Row::operator!=(const Row& other) const
 {
-	return this->lattice != other.lattice || this->row != other.row;
+	return this->layer != other.layer || this->row != other.row;
 }
 
 Row* Row::operator++()
@@ -26,9 +16,19 @@ Row& Row::operator*()
 	return *this;
 }
 
-const Lattice* Row::getLattice() const
+Tile Row::begin() const
 {
-	return this->lattice;
+	return Tile{this, 0};
+}
+
+Tile Row::end() const
+{
+	return Tile{this, this->layer->getLattice()->getNumRows()};
+}
+
+const Layer* Row::getLayer() const
+{
+	return this->layer;
 }
 
 const int Row::getRow() const
@@ -36,5 +36,5 @@ const int Row::getRow() const
 	return this->row;
 }
 
-Row::Row(const Lattice* lattice, const int index) : lattice{lattice}, row{index}
+Row::Row(const Layer* layer, const int index) : layer{layer}, row{index}
 {}
