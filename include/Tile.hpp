@@ -13,6 +13,8 @@ public:
 	Tile& operator*();
 	Direction begin() const;
 	Direction end() const;
+
+	const vec getCenter() const;
 private:
 	friend Row;
 
