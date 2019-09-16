@@ -1,5 +1,10 @@
 #include "main.hpp"
 
+vec StlToVec(const float* stlVec)
+{
+	return {*stlVec, *(stlVec + 1), *(stlVec + 2)};
+}
+
 vec vecMinus(vec a, vec b)
 {
 	return {a[0] - b[0], a[1] - b[1], a[2] - b[2]};
