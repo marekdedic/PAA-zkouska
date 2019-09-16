@@ -16,6 +16,7 @@ public:
 	const float getTileSize() const;
 	const float getXMin() const;
 	const float getYMin() const;
+	const float getZMin() const;
 private:
 	const float xMin;
 	const float xMax;

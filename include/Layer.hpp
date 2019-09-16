@@ -15,6 +15,7 @@ public:
 	Row begin() const;
 	Row end() const;
 	const Lattice* getLattice() const;
+	const int getLayer() const;
 private:
 	friend Lattice;
 

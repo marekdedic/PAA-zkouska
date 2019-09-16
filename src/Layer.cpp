@@ -31,5 +31,10 @@ const Lattice* Layer::getLattice() const
 	return this->lattice;
 }
 
+const int Layer::getLayer() const
+{
+	return this->layer;
+}
+
 Layer::Layer(const Lattice* lattice, const int index) : lattice{lattice}, layer{index}
 {}

@@ -28,7 +28,8 @@ Tile& Tile::operator*()
 
 const vec Tile::getCenter() const
 {
-	return {this->row->getLayer()->getLattice()->getXMin() + (column + 0.5f) * this->row->getLayer()->getLattice()->getTileSize(), this->row->getLayer()->getLattice()->getYMin() + (row->getRow() + 0.5f) * this->row->getLayer()->getLattice()->getTileSize(), 0}; // TODO: Z
+	const Lattice* lattice{this->row->getLayer()->getLattice()};
+	return {lattice->getXMin() + (row->getRow() + 0.5f) * lattice->getTileSize(), lattice->getYMin() + (column + 0.5f) * lattice->getTileSize(), lattice->getZMin() + (row->getLayer()->getLayer() + 0.5f) * lattice->getTileSize()};
 }
 
 Tile::Tile(const Row* row, const int column) : row{row}, column{column}

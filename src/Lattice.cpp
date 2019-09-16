@@ -51,6 +51,11 @@ const float Lattice::getYMin() const
 	return this->yMin;
 }
 
+const float Lattice::getZMin() const
+{
+	return this->zMin;
+}
+
 Layer Lattice::begin() const
 {
 	return Layer{this, 0};
