@@ -30,6 +30,16 @@ const int Lattice::getNumRows() const
 	return static_cast<int>(round(this->yMax - this->yMin / this->tileSize));
 }
 
+const float Lattice::getTileSize() const
+{
+	return this->tileSize;
+}
+
+const float Lattice::getXMin() const
+{
+	return this->xMin;
+}
+
 Row Lattice::begin() const
 {
 	return Row{this, 0};

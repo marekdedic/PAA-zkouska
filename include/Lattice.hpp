@@ -12,10 +12,12 @@ public:
 
 	const int getNumCols() const;
 	const int getNumRows() const;
+	const float getTileSize() const;
+	const float getXMin() const;
 private:
 	const float xMin;
-	const float yMin;
 	const float xMax;
+	const float yMin;
 	const float yMax;
 	const float tileSize;
 };
