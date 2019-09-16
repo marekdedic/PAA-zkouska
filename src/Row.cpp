@@ -26,5 +26,10 @@ Row& Row::operator*()
 	return *this;
 }
 
+const Lattice* Row::getLattice() const
+{
+	return this->lattice;
+}
+
 Row::Row(const Lattice* lattice, const int index) : lattice{lattice}, row{index}
 {}

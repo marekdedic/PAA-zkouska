@@ -13,6 +13,7 @@ public:
 	Row& operator*();
 	Tile begin() const;
 	Tile end() const;
+	const Lattice* getLattice() const;
 private:
 	friend Lattice;
 
