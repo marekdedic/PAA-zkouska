@@ -1,7 +1,7 @@
 #pragma once
 
 class Lattice;
-class Row;
+class Column;
 
 class Layer
 {
@@ -12,8 +12,8 @@ public:
 	const bool operator!=(const Layer& other) const;
 	Layer* operator++();
 	Layer& operator*();
-	Row begin() const;
-	Row end() const;
+	Column begin() const;
+	Column end() const;
 	const Lattice* getLattice() const;
 	const int getLayer() const;
 private:

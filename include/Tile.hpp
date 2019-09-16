@@ -1,6 +1,6 @@
 #pragma once
 
-class Row;
+class Column;
 
 class Tile
 {
@@ -16,10 +16,10 @@ public:
 
 	const vec getCenter() const;
 private:
-	friend Row;
+	friend Column;
 
-	const Row* row;
-	int column;
+	const Column* column;
+	int tile;
 
-	Tile(const Row* row, const int column);
+	Tile(const Column* column, const int tile);
 };

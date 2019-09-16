@@ -33,11 +33,11 @@ int main()
 		return -1;
 	}
 	const Lattice lattice{-15, 15, -15, 15, -15, 15, 1};
-	for(auto slice: lattice)
+	for(auto layer: lattice)
 	{
-		for(auto row : slice)
+		for(auto column : layer)
 		{
-			for(auto tile : row)
+			for(auto tile : column)
 			{
 				for(auto direction : tile)
 				{

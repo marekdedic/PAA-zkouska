@@ -16,14 +16,14 @@ Layer& Layer::operator*()
 	return *this;
 }
 
-Row Layer::begin() const
+Column Layer::begin() const
 {
-	return Row{this, 0};
+	return Column{this, 0};
 }
 
-Row Layer::end() const
+Column Layer::end() const
 {
-	return Row{this, this->lattice->getNumRows()};
+	return Column{this, this->lattice->getNumCols()};
 }
 
 const Lattice* Layer::getLattice() const
@@ -36,5 +36,5 @@ const int Layer::getLayer() const
 	return this->layer;
 }
 
-Layer::Layer(const Lattice* lattice, const int index) : lattice{lattice}, layer{index}
+Layer::Layer(const Lattice* lattice, const int layer) : lattice{lattice}, layer{layer}
 {}
