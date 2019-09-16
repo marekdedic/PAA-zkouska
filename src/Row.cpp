@@ -31,5 +31,10 @@ const Lattice* Row::getLattice() const
 	return this->lattice;
 }
 
+const int Row::getRow() const
+{
+	return this->row;
+}
+
 Row::Row(const Lattice* lattice, const int index) : lattice{lattice}, row{index}
 {}

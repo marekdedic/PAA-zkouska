@@ -14,6 +14,7 @@ public:
 	Tile begin() const;
 	Tile end() const;
 	const Lattice* getLattice() const;
+	const int getRow() const;
 private:
 	friend Lattice;
 

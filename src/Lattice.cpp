@@ -40,6 +40,11 @@ const float Lattice::getXMin() const
 	return this->xMin;
 }
 
+const float Lattice::getYMin() const
+{
+	return this->yMin;
+}
+
 Row Lattice::begin() const
 {
 	return Row{this, 0};

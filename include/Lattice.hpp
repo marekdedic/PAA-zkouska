@@ -14,6 +14,7 @@ public:
 	const int getNumRows() const;
 	const float getTileSize() const;
 	const float getXMin() const;
+	const float getYMin() const;
 private:
 	const float xMin;
 	const float xMax;
