@@ -79,9 +79,17 @@ bool Direction::pointInTriangle(stl_reader::StlMesh<float, unsigned int> *mesh, 
 {
 	// Convert point to barycentric coordinates
 	float b0{vecLength(vecMinus(stlToVec(mesh->tri_corner_coords(ti, 0)), stlToVec(mesh->tri_corner_coords(ti, 1)))) * point[0]};
+	if (b0 < 0 or 1 < b0)
+	{
+		return false;
+	}
 	float b1{vecLength(vecMinus(stlToVec(mesh->tri_corner_coords(ti, 0)), stlToVec(mesh->tri_corner_coords(ti, 2)))) * point[1]};
+	if (b1 < 0 or 1 < b1)
+	{
+		return false;
+	}
 	float b2{vecLength(vecMinus(stlToVec(mesh->tri_corner_coords(ti, 1)), stlToVec(mesh->tri_corner_coords(ti, 2)))) * point[2]};
-	return 0 <= b0 and 0 <= b1 and 0 <= b2 and b0 <= 1 and b1 <= 1 and b2 <= 1;
+	return 0 <= b2 and b2 <= 1;
 }
 
 void Direction::intersect(stl_reader::StlMesh<float, unsigned int> *mesh, const size_t ti)
