@@ -26,8 +26,8 @@ float intersect(vec planePoint, vec linePoint, vec planeNormal, vec lineVec)
 
 int main()
 {
-	stl_reader::StlMesh mesh{"teapot.stl"};
-	if(mesh.num_solids() > 1)
+	stl_reader::StlMesh<float, unsigned int>* mesh{new stl_reader::StlMesh{"teapot.stl"}};
+	if(mesh->num_solids() > 1)
 	{
 		std::cerr << "Only STL files with 1 solid are supported" << std::endl;
 		return -1;
@@ -41,16 +41,14 @@ int main()
 			{
 				for(auto direction : tile)
 				{
-					std::array v{direction.getVec()};
-					std::cout << v[0] << " " << v[1] << " " << v[2] << std::endl;
-					for(size_t i{1};i < mesh.num_tris(); ++i)
+					for(size_t i{1};i < mesh->num_tris(); ++i)
 					{
-						std::cout << intersect(StlToVec(mesh.tri_corner_coords(i, 0)), tile.getCenter(), StlToVec(mesh.tri_normal(i)), direction.getVec()) << std::endl;
+						direction.intersect(mesh, i);
 					}
 				}
 			}
 		}
 	}
-    std::cout << "Hello, World!" << mesh.num_solids() << std::endl;
+    std::cout << "Hello, World!" << mesh->num_solids() << std::endl;
     return 0;
 }
