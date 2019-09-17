@@ -21,7 +21,7 @@ float intersect(vec planePoint, vec linePoint, vec planeNormal, vec lineVec)
 	{
 		return 0;
 	}
-	return scalarProduct(vecMinus(planePoint, linePoint), planeNormal);
+	return scalarProduct(vecMinus(planePoint, linePoint), planeNormal) / denominator;
 }
 
 int main()
