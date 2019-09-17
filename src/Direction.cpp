@@ -4,12 +4,12 @@ unsigned int Direction::pointCounter = 0;
 
 const bool Direction::operator!=(const Direction& other) const
 {
-	return this->tile != other.tile || this->direction != other.direction;
+	return tile != other.tile || direction != other.direction;
 }
 
 Direction* Direction::operator++()
 {
-	++this->direction;
+	++direction;
 	return this;
 }
 
@@ -20,64 +20,108 @@ Direction& Direction::operator*()
 
 const vec Direction::getVec() const
 {
-	switch(this->direction)
+	vec ret{0, 0, 0};
+	switch(direction)
 	{
 		case 0:
-			return {-1, -1, -1};
+			ret = {-1, -1, -1};
+			break;
 		case 1:
-			return {-1, -1, 0};
+			ret = {-1, -1, 0};
+			break;
 		case 2:
-			return {-1, -1, 1};
+			ret = {-1, -1, 1};
+			break;
 		case 3:
-			return {-1, 0, -1};
+			ret = {-1, 0, -1};
+			break;
 		case 4:
-			return {-1, 0, 0};
+			ret = {-1, 0, 0};
+			break;
 		case 5:
-			return {-1, 0, 1};
+			ret = {-1, 0, 1};
+			break;
 		case 6:
-			return {-1, 1, -1};
+			ret = {-1, 1, -1};
+			break;
 		case 7:
-			return {-1, 1, 0};
+			ret = {-1, 1, 0};
+			break;
 		case 8:
-			return {-1, 1, 1};
+			ret = {-1, 1, 1};
+			break;
 		case 9:
-			return {0, -1, -1};
+			ret = {0, -1, -1};
+			break;
 		case 10:
-			return {0, -1, 0};
+			ret = {0, -1, 0};
+			break;
 		case 11:
-			return {0, -1, 1};
+			ret = {0, -1, 1};
+			break;
 		case 12:
-			return {0, 0, -1};
+			ret = {0, 0, -1};
+			break;
 		case 13:
-			return {0, 0, 1};
+			ret = {0, 0, 1};
+			break;
 		case 14:
-			return {0, 1, -1};
+			ret = {0, 1, -1};
+			break;
 		case 15:
-			return {0, 1, 0};
+			ret = {0, 1, 0};
+			break;
 		case 16:
-			return {0, 1, 1};
+			ret = {0, 1, 1};
+			break;
 		case 17:
-			return {1, -1, -1};
+			ret = {1, -1, -1};
+			break;
 		case 18:
-			return {1, -1, 0};
+			ret = {1, -1, 0};
+			break;
 		case 19:
-			return {1, -1, 1};
+			ret = {1, -1, 1};
+			break;
 		case 20:
-			return {1, 0, -1};
+			ret = {1, 0, -1};
+			break;
 		case 21:
-			return {1, 0, 0};
+			ret = {1, 0, 0};
+			break;
 		case 22:
-			return {1, 0, 1};
+			ret = {1, 0, 1};
+			break;
 		case 23:
-			return {1, 1, -1};
+			ret = {1, 1, -1};
+			break;
 		case 24:
-			return {1, 1, 0};
+			ret = {1, 1, 0};
+			break;
 		case 25:
-			return {1, 1, 1};
+			ret = {1, 1, 1};
+			break;
 		default:
 			std::cerr << "Invalid direction." << std::endl;
-			return {0, 0, 0};
+			ret = {0, 0, 0};
+			break;
 	}
+	return normalize(ret);
+}
+
+float Direction::vecLength(vec a)
+{
+	return sqrt(a[0] * a[0] + a[1] * a[1] + a[2] * a[2]);
+}
+
+vec Direction::normalize(vec a)
+{
+	float denominator{vecLength(a)};
+	if(denominator == 0)
+	{
+		return a;
+	}
+	return {a[0] / denominator, a[1] / denominator, a[2] / denominator};
 }
 
 vec Direction::stlToVec(const float *stlVec)
@@ -115,10 +159,20 @@ float Direction::linePlaneIntersection(vec planePoint, vec linePoint, vec planeN
 	return scalarProduct(vecMinus(planePoint, linePoint), planeNormal) / denominator;
 }
 
+bool Direction::pointInTriangle(stl_reader::StlMesh<float, unsigned int> *mesh, const size_t ti, vec point)
+{
+	// Convert point to barycentric coordinates
+	float b0{vecLength(vecMinus(stlToVec(mesh->tri_corner_coords(ti, 0)), stlToVec(mesh->tri_corner_coords(ti, 1)))) * point[0]};
+	float b1{vecLength(vecMinus(stlToVec(mesh->tri_corner_coords(ti, 0)), stlToVec(mesh->tri_corner_coords(ti, 2)))) * point[1]};
+	float b2{vecLength(vecMinus(stlToVec(mesh->tri_corner_coords(ti, 1)), stlToVec(mesh->tri_corner_coords(ti, 2)))) * point[2]};
+	return 0 <= b0 and 0 <= b1 and 0 <= b2 and b0 <= 1 and b1 <= 1 and b2 <= 1;
+}
+
 void Direction::intersect(stl_reader::StlMesh<float, unsigned int> *mesh, const size_t ti)
 {
 	float newLength{linePlaneIntersection(stlToVec(mesh->tri_corner_coords(ti, 0)), tile->getCenter(), stlToVec(mesh->tri_normal(ti)), getVec())};
-	if(newLength > 0 and newLength < length)
+	// Check if the intersection is actually in the triangle - previously we intersected with the whole plane, not just the triangle
+	if(pointInTriangle(mesh, ti, vecPlus(tile->getCenter(), vecTimes(newLength, getVec()))) and newLength > 0.0001 and newLength < length)
 	{
 		length = newLength;
 	}
@@ -175,7 +229,6 @@ Direction::Direction(const Tile *tile, const int direction) : tile{tile}, direct
 			length = 1;
 			break;
 		default:
-			std::cerr << "Invalid direction." << std::endl;
 			length = 0;
 	}
 	length *= tile->getColumn()->getLayer()->getLattice()->getTileSize();

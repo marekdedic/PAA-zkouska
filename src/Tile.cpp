@@ -7,7 +7,7 @@ Direction Tile::begin() const
 
 Direction Tile::end() const
 {
-	return Direction{this, 25};
+	return Direction{this, 26};
 }
 
 const bool Tile::operator!=(const Tile& other) const

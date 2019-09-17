@@ -13,12 +13,15 @@ public:
 	Direction& operator*();
 
 	const vec getVec() const;
+	static float vecLength(vec a);
+	static vec normalize(vec a);
 	static vec stlToVec(const float* stlVec);
 	static vec vecPlus(vec a, vec b);
 	static vec vecMinus(vec a, vec b);
 	static vec vecTimes(float a, vec b);
 	static float scalarProduct(vec a, vec b);
 	static float linePlaneIntersection(vec planePoint, vec linePoint, vec planeNormal, vec lineVec);
+	static bool pointInTriangle(stl_reader::StlMesh<float, unsigned int>* mesh, const size_t ti, vec point);
 	void intersect(stl_reader::StlMesh<float, unsigned int>* mesh, const size_t ti);
 	void write(vtkSmartPointer<vtkPoints> points, vtkSmartPointer<vtkCellArray> lines) const;
 private:
