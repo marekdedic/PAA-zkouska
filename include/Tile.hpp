@@ -14,6 +14,7 @@ public:
 	Direction begin() const;
 	Direction end() const;
 
+	const Column* getColumn() const;
 	const vec getCenter() const;
 private:
 	friend Column;

@@ -32,9 +32,9 @@ int main()
 		std::cerr << "Only STL files with 1 solid are supported" << std::endl;
 		return -1;
 	}
-	const Lattice lattice{-10, 10, -10, 10, -10, 10, 1};
 	vtkSmartPointer<vtkPoints> points{vtkSmartPointer<vtkPoints>::New()};
 	vtkSmartPointer<vtkCellArray> lines{vtkSmartPointer<vtkCellArray>::New()};
+	const Lattice lattice{-10, 10, -10, 10, -10, 10, 1};
 	for(auto layer: lattice)
 	{
 		for(auto column : layer)

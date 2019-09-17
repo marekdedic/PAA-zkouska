@@ -26,6 +26,11 @@ Tile& Tile::operator*()
 	return *this;
 }
 
+const Column* Tile::getColumn() const
+{
+	return column;
+}
+
 const vec Tile::getCenter() const
 {
 	const Lattice* lattice{column->getLayer()->getLattice()};

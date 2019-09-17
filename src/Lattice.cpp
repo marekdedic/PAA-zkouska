@@ -23,17 +23,17 @@ Lattice::Lattice(float xMin, float xMax, float yMin, float yMax, float zMin, flo
 
 const int Lattice::getNumRows() const
 {
-	return static_cast<int>(round(this->xMax - this->xMin / this->tileSize));
+	return static_cast<int>(round((xMax - xMin) / tileSize));
 }
 
 const int Lattice::getNumCols() const
 {
-	return static_cast<int>(round(this->yMax - this->yMin / this->tileSize));
+	return static_cast<int>(round((yMax - yMin) / tileSize));
 }
 
 const int Lattice::getNumLayers() const
 {
-	return static_cast<int>(round(this->zMax - this->zMin / this->tileSize));
+	return static_cast<int>(round((zMax - zMin) / tileSize));
 }
 
 const float Lattice::getTileSize() const

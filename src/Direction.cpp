@@ -1,5 +1,7 @@
 #include "main.hpp"
 
+unsigned int Direction::pointCounter = 0;
+
 const bool Direction::operator!=(const Direction& other) const
 {
 	return this->tile != other.tile || this->direction != other.direction;
@@ -130,9 +132,10 @@ void Direction::write(vtkSmartPointer<vtkPoints> points, vtkSmartPointer<vtkCell
 	points->InsertNextPoint(endPoint[0], endPoint[1], endPoint[2]);
 
 	vtkSmartPointer<vtkLine> line{vtkSmartPointer<vtkLine>::New()};
-	line->GetPointIds()->SetId(0, 0); // TODO: Correct vtkids
-	line->GetPointIds()->SetId(1, 1);
+	line->GetPointIds()->SetId(0, pointCounter);
+	line->GetPointIds()->SetId(1, pointCounter + 1);
 	lines->InsertNextCell(line);
+	pointCounter += 2;
 }
 
 Direction::Direction(const Tile *tile, const int direction) : tile{tile}, direction{direction}
@@ -175,4 +178,5 @@ Direction::Direction(const Tile *tile, const int direction) : tile{tile}, direct
 			std::cerr << "Invalid direction." << std::endl;
 			length = 0;
 	}
+	length *= tile->getColumn()->getLayer()->getLattice()->getTileSize();
 }

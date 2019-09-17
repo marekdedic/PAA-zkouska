@@ -23,6 +23,7 @@ public:
 	void write(vtkSmartPointer<vtkPoints> points, vtkSmartPointer<vtkCellArray> lines) const;
 private:
 	friend Tile;
+	static unsigned int pointCounter;
 
 	const Tile* tile;
 	int direction;
