@@ -33,4 +33,5 @@ private:
 	float length;
 
 	Direction(const Tile* tile, const int direction);
+	void setLength();
 };

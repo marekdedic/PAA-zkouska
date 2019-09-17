@@ -4,12 +4,13 @@ unsigned int Direction::pointCounter = 0;
 
 const bool Direction::operator!=(const Direction& other) const
 {
-	return tile != other.tile || direction != other.direction;
+	return tile != other.tile || direction != other.direction || length != other.length;
 }
 
 Direction* Direction::operator++()
 {
 	++direction;
+	setLength();
 	return this;
 }
 
@@ -192,7 +193,12 @@ void Direction::write(vtkSmartPointer<vtkPoints> points, vtkSmartPointer<vtkCell
 	pointCounter += 2;
 }
 
-Direction::Direction(const Tile *tile, const int direction) : tile{tile}, direction{direction}
+Direction::Direction(const Tile *tile, const int direction) : tile{tile}, direction{direction}, length{0}
+{
+	setLength();
+}
+
+void Direction::setLength()
 {
 	switch(this->direction)
 	{
