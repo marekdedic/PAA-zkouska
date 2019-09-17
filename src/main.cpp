@@ -33,6 +33,8 @@ int main()
 		return -1;
 	}
 	const Lattice lattice{-10, 10, -10, 10, -10, 10, 1};
+	vtkSmartPointer<vtkPoints> points{vtkSmartPointer<vtkPoints>::New()};
+	vtkSmartPointer<vtkCellArray> lines{vtkSmartPointer<vtkCellArray>::New()};
 	for(auto layer: lattice)
 	{
 		for(auto column : layer)
@@ -41,14 +43,28 @@ int main()
 			{
 				for(auto direction : tile)
 				{
-					for(size_t i{1};i < mesh->num_tris(); ++i)
+					for(size_t i{1}; i < mesh->num_tris(); ++i)
 					{
 						direction.intersect(mesh, i);
 					}
+					direction.write(points, lines);
 				}
 			}
 		}
 	}
-    std::cout << "Hello, World!" << mesh->num_solids() << std::endl;
+	vtkSmartPointer<vtkPolyData> linePolyData{vtkSmartPointer<vtkPolyData>::New()};
+	linePolyData->SetPoints(points);
+	linePolyData->SetLines(lines);
+
+	vtkSmartPointer<vtkAppendFilter> appendFilter{vtkSmartPointer<vtkAppendFilter>::New()};
+	appendFilter->AddInputData(linePolyData);
+	appendFilter->Update();
+	vtkSmartPointer<vtkUnstructuredGrid> grid{vtkSmartPointer<vtkUnstructuredGrid>::New()};
+	grid->ShallowCopy(appendFilter->GetOutput());
+
+	vtkSmartPointer<vtkUnstructuredGridWriter> writer{vtkSmartPointer<vtkUnstructuredGridWriter>::New()};
+	writer->SetFileName("output.vtk");
+	writer->SetInputData(grid);
+	writer->Write();
     return 0;
 }

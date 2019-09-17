@@ -83,9 +83,19 @@ vec Direction::stlToVec(const float *stlVec)
 	return {*stlVec, *(stlVec + 1), *(stlVec + 2)};
 }
 
+vec Direction::vecPlus(vec a, vec b)
+{
+	return {a[0] + b[0], a[1] + b[1], a[2] + b[2]};
+}
+
 vec Direction::vecMinus(vec a, vec b)
 {
 	return {a[0] - b[0], a[1] - b[1], a[2] - b[2]};
+}
+
+vec Direction::vecTimes(float a, vec b)
+{
+	return {a * b[0], a * b[1], a * b[2]};
 }
 
 float Direction::scalarProduct(vec a, vec b)
@@ -110,6 +120,19 @@ void Direction::intersect(stl_reader::StlMesh<float, unsigned int> *mesh, const 
 	{
 		length = newLength;
 	}
+}
+
+void Direction::write(vtkSmartPointer<vtkPoints> points, vtkSmartPointer<vtkCellArray> lines) const
+{
+	vec center{tile->getCenter()};
+	vec endPoint{vecPlus(center, vecTimes(length, getVec()))};
+	points->InsertNextPoint(center[0], center[1], center[2]);
+	points->InsertNextPoint(endPoint[0], endPoint[1], endPoint[2]);
+
+	vtkSmartPointer<vtkLine> line{vtkSmartPointer<vtkLine>::New()};
+	line->GetPointIds()->SetId(0, 0); // TODO: Correct vtkids
+	line->GetPointIds()->SetId(1, 1);
+	lines->InsertNextCell(line);
 }
 
 Direction::Direction(const Tile *tile, const int direction) : tile{tile}, direction{direction}

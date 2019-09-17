@@ -4,6 +4,7 @@ project(PAA_zkouska)
 find_package(VTK COMPONENTS
 		vtkCommonCore
 		vtkCommonDataModel
+		vtkFiltersCore
 		vtkIOLegacy QUIET)
 
 set(CMAKE_CXX_STANDARD 17)
