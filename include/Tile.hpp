@@ -21,6 +21,8 @@ private:
 
 	const Column* column;
 	int tile;
+	vec center;
 
 	Tile(const Column* column, const int tile);
+	void setCenter();
 };

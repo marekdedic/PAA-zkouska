@@ -12,12 +12,13 @@ Direction Tile::end() const
 
 const bool Tile::operator!=(const Tile& other) const
 {
-	return this->column != other.column || this->tile != other.tile;
+	return column != other.column || tile != other.tile;
 }
 
 Tile* Tile::operator++()
 {
 	++this->tile;
+	setCenter();
 	return this;
 }
 
@@ -33,9 +34,16 @@ const Column* Tile::getColumn() const
 
 const vec Tile::getCenter() const
 {
-	const Lattice* lattice{column->getLayer()->getLattice()};
-	return {lattice->getXMin() + (tile + 0.5f) * lattice->getTileSize(), lattice->getYMin() + (column->getColumn() + 0.5f) * lattice->getTileSize(), lattice->getZMin() + (column->getLayer()->getLayer() + 0.5f) * lattice->getTileSize()};
+	return center;
 }
 
-Tile::Tile(const Column* column, const int tile) : column{column}, tile{tile}
-{}
+Tile::Tile(const Column* column, const int tile) : column{column}, tile{tile}, center{0, 0, 0}
+{
+	setCenter();
+}
+
+void Tile::setCenter()
+{
+	const Lattice* lattice{column->getLayer()->getLattice()};
+	center =  {lattice->getXMin() + (tile + 0.5f) * lattice->getTileSize(), lattice->getYMin() + (column->getColumn() + 0.5f) * lattice->getTileSize(), lattice->getZMin() + (column->getLayer()->getLayer() + 0.5f) * lattice->getTileSize()};
+}
