@@ -30,8 +30,10 @@ private:
 
 	const Tile* tile;
 	int direction;
+	vec vector;
 	float length;
 
 	Direction(const Tile* tile, const int direction);
 	void setLength();
+	void setVec();
 };

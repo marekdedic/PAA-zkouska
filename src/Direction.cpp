@@ -11,6 +11,7 @@ Direction* Direction::operator++()
 {
 	++direction;
 	setLength();
+	setVec();
 	return this;
 }
 
@@ -21,93 +22,7 @@ Direction& Direction::operator*()
 
 const vec Direction::getVec() const
 {
-	vec ret{0, 0, 0};
-	switch(direction)
-	{
-		case 0:
-			ret = {-1, -1, -1};
-			break;
-		case 1:
-			ret = {-1, -1, 0};
-			break;
-		case 2:
-			ret = {-1, -1, 1};
-			break;
-		case 3:
-			ret = {-1, 0, -1};
-			break;
-		case 4:
-			ret = {-1, 0, 0};
-			break;
-		case 5:
-			ret = {-1, 0, 1};
-			break;
-		case 6:
-			ret = {-1, 1, -1};
-			break;
-		case 7:
-			ret = {-1, 1, 0};
-			break;
-		case 8:
-			ret = {-1, 1, 1};
-			break;
-		case 9:
-			ret = {0, -1, -1};
-			break;
-		case 10:
-			ret = {0, -1, 0};
-			break;
-		case 11:
-			ret = {0, -1, 1};
-			break;
-		case 12:
-			ret = {0, 0, -1};
-			break;
-		case 13:
-			ret = {0, 0, 1};
-			break;
-		case 14:
-			ret = {0, 1, -1};
-			break;
-		case 15:
-			ret = {0, 1, 0};
-			break;
-		case 16:
-			ret = {0, 1, 1};
-			break;
-		case 17:
-			ret = {1, -1, -1};
-			break;
-		case 18:
-			ret = {1, -1, 0};
-			break;
-		case 19:
-			ret = {1, -1, 1};
-			break;
-		case 20:
-			ret = {1, 0, -1};
-			break;
-		case 21:
-			ret = {1, 0, 0};
-			break;
-		case 22:
-			ret = {1, 0, 1};
-			break;
-		case 23:
-			ret = {1, 1, -1};
-			break;
-		case 24:
-			ret = {1, 1, 0};
-			break;
-		case 25:
-			ret = {1, 1, 1};
-			break;
-		default:
-			std::cerr << "Invalid direction." << std::endl;
-			ret = {0, 0, 0};
-			break;
-	}
-	return normalize(ret);
+	return vector;
 }
 
 float Direction::vecLength(vec a)
@@ -193,9 +108,10 @@ void Direction::write(vtkSmartPointer<vtkPoints> points, vtkSmartPointer<vtkCell
 	pointCounter += 2;
 }
 
-Direction::Direction(const Tile *tile, const int direction) : tile{tile}, direction{direction}, length{0}
+Direction::Direction(const Tile *tile, const int direction) : tile{tile}, direction{direction}, length{0}, vector{0, 0, 0}
 {
 	setLength();
+	setVec();
 }
 
 void Direction::setLength()
@@ -238,4 +154,94 @@ void Direction::setLength()
 			length = 0;
 	}
 	length *= tile->getColumn()->getLayer()->getLattice()->getTileSize();
+}
+
+void Direction::setVec()
+{
+	vec ret{0, 0, 0};
+	switch(direction)
+	{
+		case 0:
+			ret = {-1, -1, -1};
+			break;
+		case 1:
+			ret = {-1, -1, 0};
+			break;
+		case 2:
+			ret = {-1, -1, 1};
+			break;
+		case 3:
+			ret = {-1, 0, -1};
+			break;
+		case 4:
+			ret = {-1, 0, 0};
+			break;
+		case 5:
+			ret = {-1, 0, 1};
+			break;
+		case 6:
+			ret = {-1, 1, -1};
+			break;
+		case 7:
+			ret = {-1, 1, 0};
+			break;
+		case 8:
+			ret = {-1, 1, 1};
+			break;
+		case 9:
+			ret = {0, -1, -1};
+			break;
+		case 10:
+			ret = {0, -1, 0};
+			break;
+		case 11:
+			ret = {0, -1, 1};
+			break;
+		case 12:
+			ret = {0, 0, -1};
+			break;
+		case 13:
+			ret = {0, 0, 1};
+			break;
+		case 14:
+			ret = {0, 1, -1};
+			break;
+		case 15:
+			ret = {0, 1, 0};
+			break;
+		case 16:
+			ret = {0, 1, 1};
+			break;
+		case 17:
+			ret = {1, -1, -1};
+			break;
+		case 18:
+			ret = {1, -1, 0};
+			break;
+		case 19:
+			ret = {1, -1, 1};
+			break;
+		case 20:
+			ret = {1, 0, -1};
+			break;
+		case 21:
+			ret = {1, 0, 0};
+			break;
+		case 22:
+			ret = {1, 0, 1};
+			break;
+		case 23:
+			ret = {1, 1, -1};
+			break;
+		case 24:
+			ret = {1, 1, 0};
+			break;
+		case 25:
+			ret = {1, 1, 1};
+			break;
+		default:
+			ret = {0, 0, 0};
+			break;
+	}
+	vector = normalize(ret);
 }
