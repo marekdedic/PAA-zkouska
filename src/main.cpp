@@ -32,9 +32,10 @@ int main()
 		std::cerr << "Only STL files with 1 solid are supported" << std::endl;
 		return -1;
 	}
-	vtkSmartPointer<vtkPoints> points{vtkSmartPointer<vtkPoints>::New()};
-	vtkSmartPointer<vtkCellArray> lines{vtkSmartPointer<vtkCellArray>::New()};
 	const Lattice lattice{-10, 10, -10, 10, -10, 10, 1};
+
+	std::vector<std::pair<vec, vec>> output{};
+	output.reserve(lattice.getNumRows() * lattice.getNumCols() * lattice.getNumLayers() * 26);
 
 	std::vector<std::thread> threads{};
 	std::mutex m{};
@@ -51,10 +52,10 @@ int main()
 					{
 						for(auto direction : tile)
 						{
-							  direction.intersectAll(mesh);
-							  m.lock();
-							  direction.write(points, lines);
-							  m.unlock();
+							direction.intersectAll(mesh);
+							m.lock();
+							direction.write(output);
+							m.unlock();
 						}
 					}
 				}
@@ -64,6 +65,21 @@ int main()
 	for(auto thread{threads.begin()}; thread < threads.end(); ++thread)
 	{
 		thread->join();
+	}
+
+	vtkSmartPointer<vtkPoints> points{vtkSmartPointer<vtkPoints>::New()};
+	vtkSmartPointer<vtkCellArray> lines{vtkSmartPointer<vtkCellArray>::New()};
+	unsigned int pointCounter{0};
+	for(auto arrow: output)
+	{
+		points->InsertNextPoint(arrow.first[0], arrow.first[1], arrow.first[2]);
+		points->InsertNextPoint(arrow.second[0], arrow.second[1], arrow.second[2]);
+
+		vtkSmartPointer<vtkLine> line{vtkSmartPointer<vtkLine>::New()};
+		line->GetPointIds()->SetId(0, pointCounter);
+		line->GetPointIds()->SetId(1, pointCounter + 1);
+		lines->InsertNextCell(line);
+		pointCounter += 2;
 	}
 	vtkSmartPointer<vtkPolyData> linePolyData{vtkSmartPointer<vtkPolyData>::New()};
 	linePolyData->SetPoints(points);
