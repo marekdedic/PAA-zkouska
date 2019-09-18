@@ -1,44 +1,17 @@
 #include "main.hpp"
 
-int main()
+stl_reader::StlMesh<float, unsigned int>* load_mesh(std::string filename)
 {
-	stl_reader::StlMesh<float, unsigned int>* mesh{new stl_reader::StlMesh{"teapot.stl"}};
+	stl_reader::StlMesh<float, unsigned int>* mesh{new stl_reader::StlMesh{filename}};
 	if(mesh->num_solids() > 1)
 	{
 		std::cerr << "Only STL files with 1 solid are supported" << std::endl;
-		return -1;
 	}
-	const Lattice lattice{-10, 10, -10, 10, -10, 10, 1};
+	return mesh;
+}
 
-	std::vector<std::pair<vec, vec>> output{};
-	output.reserve(lattice.getNumRows() * lattice.getNumCols() * lattice.getNumLayers() * 26);
-
-	std::vector<std::thread> threads{};
-	threads.reserve(lattice.getNumRows() * lattice.getNumCols() * lattice.getNumLayers());
-	std::mutex m{};
-	for(auto layer: lattice)
-	{
-		for(auto column : layer)
-		{
-			for(auto tile : column)
-			{
-				threads.push_back(std::thread{[tile, &output, &m, &mesh] () mutable
-				{
-					for(auto direction : tile)
-					{
-						direction.intersectAll(mesh);
-						m.lock();
-						direction.write(output);
-					}
-				}});
-			}
-		}
-	}
-	for(auto thread{threads.begin()}; thread < threads.end(); ++thread)
-	{
-		thread->join();
-	}
-
+void write_lattice(std::vector<std::pair<vec, vec>>& output)
+{
 	vtkSmartPointer<vtkPoints> points{vtkSmartPointer<vtkPoints>::New()};
 	vtkSmartPointer<vtkCellArray> lines{vtkSmartPointer<vtkCellArray>::New()};
 	unsigned int pointCounter{0};
@@ -67,5 +40,43 @@ int main()
 	writer->SetFileName("output.vtk");
 	writer->SetInputData(grid);
 	writer->Write();
+}
+
+int main()
+{
+	stl_reader::StlMesh<float, unsigned int>* mesh{load_mesh("teapot.stl")};
+	const Lattice lattice{-10, 10, -10, 10, -10, 10, 1};
+
+	std::vector<std::pair<vec, vec>> output{};
+	output.reserve(lattice.getNumRows() * lattice.getNumCols() * lattice.getNumLayers() * 26);
+
+	std::vector<std::thread> threads{};
+	threads.reserve(lattice.getNumRows() * lattice.getNumCols() * lattice.getNumLayers());
+	std::mutex m{};
+	for(auto layer: lattice)
+	{
+		for(auto column : layer)
+		{
+			for(auto tile : column)
+			{
+				threads.push_back(std::thread{[tile, &output, &m, &mesh] () mutable
+				{
+					for(auto direction : tile)
+					{
+						direction.intersectAll(mesh);
+						m.lock();
+						direction.write(output);
+						m.unlock();
+						}
+				}});
+			}
+		}
+	}
+	for(auto thread{threads.begin()}; thread < threads.end(); ++thread)
+	{
+		thread->join();
+	}
+
+	write_lattice(output);
     return 0;
 }
