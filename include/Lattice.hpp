@@ -25,4 +25,6 @@ private:
 	const float zMin;
 	const float zMax;
 	const float tileSize;
+
+	void checkDimension(const float min, const float max, const char dim) const;
 };
