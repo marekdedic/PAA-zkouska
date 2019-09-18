@@ -37,7 +37,6 @@ int main()
 	const Lattice lattice{-10, 10, -10, 10, -10, 10, 1};
 
 	std::vector<std::thread> threads{};
-	threads.reserve(lattice.getNumRows() * lattice.getNumCols() * lattice.getNumLayers());
 	std::mutex m{};
 	for(int threadId{0}; threadId < std::thread::hardware_concurrency(); ++threadId)
 	{
