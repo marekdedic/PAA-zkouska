@@ -39,25 +39,28 @@ int main()
 	std::vector<std::thread> threads{};
 	threads.reserve(lattice.getNumRows() * lattice.getNumCols() * lattice.getNumLayers());
 	std::mutex m{};
-	for(auto layer: lattice)
+	for(int threadId{0}; threadId < std::thread::hardware_concurrency(); ++threadId)
 	{
-		for(auto column : layer)
+		SubLattice* subLattice{lattice.subLattice(threadId, std::thread::hardware_concurrency())};
+		threads.push_back(std::thread{[&subLattice, &mesh, &points, &lines, &m] ()
 		{
-			for(auto tile : column)
+			for(auto layer: *subLattice)
 			{
-				for(auto direction : tile)
+				for(auto column : layer)
 				{
-					threads.push_back(std::thread{[&direction, &points, &lines, &m] (stl_reader::StlMesh<float, unsigned int>* mesh)
+					for(auto tile : column)
 					{
-						direction.intersectAll(mesh);
-						m.lock();
-						direction.write(points, lines);
-						m.unlock();
-						}, mesh});
-
+						for(auto direction : tile)
+						{
+							  direction.intersectAll(mesh);
+							  m.lock();
+							  direction.write(points, lines);
+							  m.unlock();
+						}
+					}
 				}
 			}
-		}
+		}});
 	}
 	for(auto thread{threads.begin()}; thread < threads.end(); ++thread)
 	{

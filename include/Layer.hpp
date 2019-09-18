@@ -1,6 +1,8 @@
 #pragma once
 
+class LatticeInterface;
 class Lattice;
+class SubLattice;
 class Column;
 
 class Layer
@@ -14,13 +16,14 @@ public:
 	Layer& operator*();
 	Column begin() const;
 	Column end() const;
-	const Lattice* getLattice() const;
+	const LatticeInterface* getLattice() const;
 	const int getLayer() const;
 private:
 	friend Lattice;
+	friend SubLattice;
 
-	const Lattice* lattice;
+	const LatticeInterface* lattice;
 	int layer;
 
-	Layer(const Lattice* lattice, const int layer);
+	Layer(const LatticeInterface* lattice, const int layer);
 };

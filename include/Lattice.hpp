@@ -1,6 +1,6 @@
 #pragma once
 
-class Lattice
+class Lattice : public LatticeInterface
 {
 public:
 	Lattice() = delete;
@@ -10,13 +10,14 @@ public:
 	Layer begin() const;
 	Layer end() const;
 
-	const int getNumRows() const; // Rows along X
-	const int getNumCols() const; // Cols along Y
-	const int getNumLayers() const; // Layers along Z
-	const float getTileSize() const;
-	const float getXMin() const;
-	const float getYMin() const;
-	const float getZMin() const;
+	virtual const int getNumRows() const; // Rows along X
+	virtual const int getNumCols() const; // Cols along Y
+	virtual const int getNumLayers() const; // Layers along Z
+	virtual const float getTileSize() const;
+	virtual const float getXMin() const;
+	virtual const float getYMin() const;
+	virtual const float getZMin() const;
+	SubLattice* subLattice(int i, int total) const;
 private:
 	const float xMin;
 	const float xMax;

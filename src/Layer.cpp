@@ -26,7 +26,7 @@ Column Layer::end() const
 	return Column{this, this->lattice->getNumCols()};
 }
 
-const Lattice* Layer::getLattice() const
+const LatticeInterface* Layer::getLattice() const
 {
 	return this->lattice;
 }
@@ -36,5 +36,5 @@ const int Layer::getLayer() const
 	return this->layer;
 }
 
-Layer::Layer(const Lattice* lattice, const int layer) : lattice{lattice}, layer{layer}
+Layer::Layer(const LatticeInterface* lattice, const int layer) : lattice{lattice}, layer{layer}
 {}

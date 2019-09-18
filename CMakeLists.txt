@@ -20,19 +20,23 @@ set(HEADER_FILES
 	include/main.hpp
 	include/global.hpp
 	include/Lattice.hpp
-		include/Column.hpp
+	include/Column.hpp
 	include/Tile.hpp
 	include/Direction.hpp
-		include/Layer.hpp
+	include/Layer.hpp
+	include/SubLattice.hpp
+	include/LatticeInterface.hpp
 )
 
 set(SOURCE_FILES
 	src/main.cpp
 	src/Lattice.cpp
-		src/Column.cpp
+	src/Column.cpp
 	src/Tile.cpp
 	src/Direction.cpp
-		src/Layer.cpp
+	src/Layer.cpp
+	src/SubLattice.cpp
+	src/LatticeInterface.cpp
 )
 
 add_executable(PAA ${HEADER_FILES} ${SOURCE_FILES})

@@ -44,6 +44,6 @@ Tile::Tile(const Column* column, const int tile) : column{column}, tile{tile}, c
 
 void Tile::setCenter()
 {
-	const Lattice* lattice{column->getLayer()->getLattice()};
+	const LatticeInterface* lattice{column->getLayer()->getLattice()};
 	center =  {lattice->getXMin() + (tile + 0.5f) * lattice->getTileSize(), lattice->getYMin() + (column->getColumn() + 0.5f) * lattice->getTileSize(), lattice->getZMin() + (column->getLayer()->getLayer() + 0.5f) * lattice->getTileSize()};
 }
