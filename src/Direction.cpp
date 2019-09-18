@@ -1,7 +1,5 @@
 #include "main.hpp"
 
-unsigned int Direction::pointCounter = 0;
-
 const bool Direction::operator!=(const Direction& other) const
 {
 	return tile != other.tile || direction != other.direction || length != other.length;
