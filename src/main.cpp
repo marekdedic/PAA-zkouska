@@ -41,9 +41,9 @@ int main()
 	std::mutex m{};
 	for(int threadId{0}; threadId < std::thread::hardware_concurrency(); ++threadId)
 	{
-		SubLattice* subLattice{lattice.subLattice(threadId, std::thread::hardware_concurrency())};
-		threads.push_back(std::thread{[&subLattice, &mesh, &points, &lines, &m] ()
+		threads.push_back(std::thread{[&lattice, threadId, &mesh, &output, &m, &counter] ()
 		{
+			SubLattice* subLattice{lattice.subLattice(threadId, std::thread::hardware_concurrency())};
 			for(auto layer: *subLattice)
 			{
 				for(auto column : layer)
