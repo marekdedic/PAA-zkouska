@@ -65,13 +65,6 @@ int main()
 		thread->join();
 	}
 
-	sort(output2.begin(), output2.end(), sortbysec);
-	sort(output.begin(), output.end(), sortbysec);
-	sort(output2.begin(), output2.end());
-	sort(output.begin(), output.end());
-	std::cout << output2[0].second[0] << std::endl;
-	std::cout << output[0].second[0] << std::endl;
-
 	vtkSmartPointer<vtkPoints> points{vtkSmartPointer<vtkPoints>::New()};
 	vtkSmartPointer<vtkCellArray> lines{vtkSmartPointer<vtkCellArray>::New()};
 	unsigned int pointCounter{0};
