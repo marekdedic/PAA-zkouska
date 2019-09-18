@@ -43,7 +43,8 @@ int main()
 			{
 				for(auto direction : tile)
 				{
-					direction.intersectAll(mesh);
+					std::thread t1([&direction] (stl_reader::StlMesh<float, unsigned int>* mesh) {direction.intersectAll(mesh);}, mesh);
+					t1.join();
 					direction.write(points, lines);
 				}
 			}

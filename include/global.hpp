@@ -4,6 +4,7 @@
 
 #include <array>
 #include <iostream>
+#include <thread>
 
 #include <vtkSmartPointer.h>
 #include <vtkPoints.h>
