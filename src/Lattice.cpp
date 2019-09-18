@@ -55,7 +55,7 @@ Layer Lattice::end() const
 void Lattice::checkDimension(const float min, const float max, const char dim) const
 {
 	double intpart{0};
-	double decPart{modf((max - min) / this->tileSize, &intpart)};
+	double decPart{modf((max - min) / tileSize, &intpart)};
 	if(decPart > 0.5)
 	{
 		decPart = 1 - decPart;
