@@ -12,12 +12,12 @@ Direction Tile::end() const
 
 const bool Tile::operator!=(const Tile& other) const
 {
-	return this->column != other.column || this->tile != other.tile;
+	return column != other.column || tile != other.tile;
 }
 
 Tile* Tile::operator++()
 {
-	++this->tile;
+	++tile;
 	return this;
 }
 

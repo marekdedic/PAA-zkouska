@@ -5,7 +5,7 @@ Lattice::Lattice(float xMin, float xMax, float yMin, float yMax, float zMin, flo
 	auto check{[this](float min, float max, char dim)
 	{
 		double _{0};
-		double decPart {modf((max - min) / this->tileSize, &_)};
+		double decPart{modf((max - min) / this->tileSize, &_)};
 		if(decPart > 0.5)
 		{
 			decPart = 1 - decPart;
@@ -16,9 +16,9 @@ Lattice::Lattice(float xMin, float xMax, float yMin, float yMax, float zMin, flo
 			std::cout << decPart << std::endl;
 		}
 	}};
-	check(this->xMin, this->xMax, 'x');
-	check(this->yMin, this->yMax, 'y');
-	check(this->zMin, this->zMax, 'z');
+	check(xMin, xMax, 'x');
+	check(yMin, yMax, 'y');
+	check(zMin, zMax, 'z');
 }
 
 const int Lattice::getNumRows() const
@@ -38,22 +38,22 @@ const int Lattice::getNumLayers() const
 
 const float Lattice::getTileSize() const
 {
-	return this->tileSize;
+	return tileSize;
 }
 
 const float Lattice::getXMin() const
 {
-	return this->xMin;
+	return xMin;
 }
 
 const float Lattice::getYMin() const
 {
-	return this->yMin;
+	return yMin;
 }
 
 const float Lattice::getZMin() const
 {
-	return this->zMin;
+	return zMin;
 }
 
 Layer Lattice::begin() const
@@ -63,5 +63,5 @@ Layer Lattice::begin() const
 
 Layer Lattice::end() const
 {
-	return Layer{this, this->getNumLayers()};
+	return Layer{this, getNumLayers()};
 }

@@ -198,7 +198,7 @@ Direction::Direction(const Tile *tile, const int direction) : tile{tile}, direct
 
 void Direction::setLength()
 {
-	switch(this->direction)
+	switch(direction)
 	{
 		case 0:
 		case 2:
