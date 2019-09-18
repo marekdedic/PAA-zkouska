@@ -27,7 +27,6 @@ public:
 	void write(std::vector<std::pair<vec, vec>>& output) const;
 private:
 	friend Tile;
-	static unsigned int pointCounter;
 
 	const Tile* tile;
 	int direction;

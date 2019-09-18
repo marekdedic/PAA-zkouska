@@ -29,7 +29,6 @@ int main()
 						direction.intersectAll(mesh);
 						m.lock();
 						direction.write(output);
-						m.unlock();
 					}
 				}});
 			}
