@@ -35,6 +35,10 @@ int main()
 	vtkSmartPointer<vtkPoints> points{vtkSmartPointer<vtkPoints>::New()};
 	vtkSmartPointer<vtkCellArray> lines{vtkSmartPointer<vtkCellArray>::New()};
 	const Lattice lattice{-10, 10, -10, 10, -10, 10, 1};
+
+	std::vector<std::thread> threads{};
+	threads.reserve(lattice.getNumRows() * lattice.getNumCols() * lattice.getNumLayers());
+	std::mutex m{};
 	for(auto layer: lattice)
 	{
 		for(auto column : layer)
@@ -43,12 +47,21 @@ int main()
 			{
 				for(auto direction : tile)
 				{
-					std::thread t1([&direction] (stl_reader::StlMesh<float, unsigned int>* mesh) {direction.intersectAll(mesh);}, mesh);
-					t1.join();
-					direction.write(points, lines);
+					threads.push_back(std::thread{[&direction, &points, &lines, &m] (stl_reader::StlMesh<float, unsigned int>* mesh)
+					{
+						direction.intersectAll(mesh);
+						m.lock();
+						direction.write(points, lines);
+						m.unlock();
+						}, mesh});
+
 				}
 			}
 		}
+	}
+	for(auto thread{threads.begin()}; thread < threads.end(); ++thread)
+	{
+		thread->join();
 	}
 	vtkSmartPointer<vtkPolyData> linePolyData{vtkSmartPointer<vtkPolyData>::New()};
 	linePolyData->SetPoints(points);
