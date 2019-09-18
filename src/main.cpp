@@ -46,17 +46,16 @@ int main()
 		{
 			for(auto tile : column)
 			{
-				for(auto direction : tile)
+				threads.push_back(std::thread{[tile, &output, &m, &mesh] () mutable
 				{
-					threads.push_back(std::thread{[&direction, &output, &m, &mesh] ()
+					for(auto direction : tile)
 					{
 						direction.intersectAll(mesh);
 						m.lock();
 						direction.write(output);
 						m.unlock();
-						}});
-
-				}
+					}
+				}});
 			}
 		}
 	}
