@@ -8,9 +8,10 @@ int main()
 		std::cerr << "Only STL files with 1 solid are supported" << std::endl;
 		return -1;
 	}
-	const Lattice lattice{-10, 10, -10, 10, -10, 10, 4};
+	const Lattice lattice{-10, 10, -10, 10, -10, 10, 1};
 
 	std::vector<std::pair<vec, vec>> output{};
+	output.reserve(lattice.getNumRows() * lattice.getNumCols() * lattice.getNumLayers() * 26);
 	for(auto layer: lattice)
 	{
 		for(auto column : layer)
