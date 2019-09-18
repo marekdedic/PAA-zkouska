@@ -42,7 +42,7 @@ The resulting code gives the folloeing results:
 
 As can be seen, the program went from running for 24 minutes to around 12 minutes, so the optimisations alone cut the runtime by half.
 
-# Simple multi-threaded algorithm
+### Simple multi-threaded algorithm
 
 A naive implementation of parallelism was implemented - each tile being computed on a separate thread. This implementation requires using a mutex for writing the output data, but as we saw in the profiler, most of the runtime is spent computing intersections, which is parallelisable without any synchronization, so the mutex shouldn't be a big issue.
 
@@ -53,8 +53,28 @@ The resulting code gives the folloeing results:
 ```sh
 ./PAA  1093,71s user 0,65s system 394% cpu 4:37,13 total
 ```
-The total run of the program was around 4 and a half minutes, so approximately 3 times faster than the sequential code. Given that the test machine has a 4-core processor, this gives the effectivity at around 64%.
+The total run of the program was around 4 and a half minutes, so approximately 3 times faster than the sequential code. Given that the test machine has a 4-core processor, this gives the speedup at around 2.56 and the effectivity at around 64%.
+
+For a more theoretical analysis of the algorithm, we can state that if `n` is the number of tiles along each dimension of the lattice, then
+
+`T_s(n) = θ (n^3)`
+`T_p(n) = θ ((n^3) / p)`
+`C(n) = θ (n^3)`
+
+This would make the algorithm cost efficient (it does not, as will be shown later).
 
 # Efficient multi-threaded algorithm
 
+Even though the naive algorithm may be cost efficient, spawning thousand of threads is generaly not a good idea. As a result, when running the previous experiment, the whole machine froze for its duration and afterwards reported a load average of 3000.
+
+A saner aproach might be to spawn a thread for each compute unit (CPU core) the machine has and divide the lattice between the threads.
+
+This implementation can be seen in the [diff view](https://github.com/marekdedic/PAA-zkouska/compare/simple-multi-thread...efficient-multi-thread).
+
+This gives the following result:
+
+```sh
 ./PAA  1117,53s user 0,26s system 376% cpu 4:56,93 total
+```
+
+The result is quite surprisingly worse then the previous experiment. This could be attributed to the uneven division of the lattice and is likely skewed by the relatively light-weight thread spawning on Linux.
