@@ -2,12 +2,12 @@
 
 const bool Column::operator!=(const Column& other) const
 {
-	return this->layer != other.layer || this->column != other.column;
+	return layer != other.layer || column != other.column;
 }
 
 Column* Column::operator++()
 {
-	++this->column;
+	++column;
 	return this;
 }
 
@@ -23,17 +23,17 @@ Tile Column::begin() const
 
 Tile Column::end() const
 {
-	return Tile{this, this->layer->getLattice()->getNumRows()};
+	return Tile{this, layer->getLattice()->getNumRows()};
 }
 
 const Layer* Column::getLayer() const
 {
-	return this->layer;
+	return layer;
 }
 
 const int Column::getColumn() const
 {
-	return this->column;
+	return column;
 }
 
 Column::Column(const Layer* layer, const int column) : layer{layer}, column{column}
