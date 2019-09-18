@@ -102,6 +102,14 @@ void Direction::intersect(stl_reader::StlMesh<float, unsigned int> *mesh, const 
 	}
 }
 
+void Direction::intersectAll(stl_reader::StlMesh<float, unsigned int> *mesh)
+{
+	for(size_t i{1}; i < mesh->num_tris(); ++i)
+	{
+		intersect(mesh, i);
+	}
+}
+
 void Direction::write(vtkSmartPointer<vtkPoints> points, vtkSmartPointer<vtkCellArray> lines) const
 {
 	vec center{tile->getCenter()};

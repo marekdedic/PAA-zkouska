@@ -43,10 +43,7 @@ int main()
 			{
 				for(auto direction : tile)
 				{
-					for(size_t i{1}; i < mesh->num_tris(); ++i)
-					{
-						direction.intersect(mesh, i);
-					}
+					direction.intersectAll(mesh);
 					direction.write(points, lines);
 				}
 			}
