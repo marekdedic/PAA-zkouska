@@ -13,3 +13,7 @@ Parallel intersection computation for the lattice Boltzmann method
 # Simple multi-threaded algorithm
 
 ./PAA  1093,71s user 0,65s system 394% cpu 4:37,13 total
+
+# Efficient multi-threaded algorithm
+
+./PAA  1117,53s user 0,26s system 376% cpu 4:56,93 total
