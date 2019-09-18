@@ -17,7 +17,7 @@ const bool Tile::operator!=(const Tile& other) const
 
 Tile* Tile::operator++()
 {
-	++this->tile;
+	++tile;
 	setCenter();
 	return this;
 }

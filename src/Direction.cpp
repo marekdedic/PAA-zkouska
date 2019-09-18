@@ -23,46 +23,6 @@ const vec Direction::getVec() const
 	return vector;
 }
 
-float Direction::vecLength(vec a)
-{
-	return sqrt(a[0] * a[0] + a[1] * a[1] + a[2] * a[2]);
-}
-
-vec Direction::normalize(vec a)
-{
-	float denominator{vecLength(a)};
-	if(denominator == 0)
-	{
-		return a;
-	}
-	return {a[0] / denominator, a[1] / denominator, a[2] / denominator};
-}
-
-vec Direction::stlToVec(const float *stlVec)
-{
-	return {*stlVec, *(stlVec + 1), *(stlVec + 2)};
-}
-
-vec Direction::vecPlus(vec a, vec b)
-{
-	return {a[0] + b[0], a[1] + b[1], a[2] + b[2]};
-}
-
-vec Direction::vecMinus(vec a, vec b)
-{
-	return {a[0] - b[0], a[1] - b[1], a[2] - b[2]};
-}
-
-vec Direction::vecTimes(float a, vec b)
-{
-	return {a * b[0], a * b[1], a * b[2]};
-}
-
-float Direction::scalarProduct(vec a, vec b)
-{
-	return a[0] * b[0] + a[1] * b[1] + a[2] * b[2];
-}
-
 float Direction::linePlaneIntersection(vec planePoint, vec linePoint, vec planeNormal, vec lineVec)
 {
 	float denominator{scalarProduct(lineVec, planeNormal)};
@@ -122,7 +82,7 @@ Direction::Direction(const Tile *tile, const int direction) : tile{tile}, direct
 
 void Direction::setLength()
 {
-	switch(this->direction)
+	switch(direction)
 	{
 		case 0:
 		case 2:

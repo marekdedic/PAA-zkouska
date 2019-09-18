@@ -2,23 +2,9 @@
 
 Lattice::Lattice(float xMin, float xMax, float yMin, float yMax, float zMin, float zMax, float tileSize) : xMin{xMin}, xMax{xMax}, yMin{yMin}, yMax{yMax}, zMin{zMin}, zMax{zMax}, tileSize{tileSize}
 {
-	auto check{[this](float min, float max, char dim)
-	{
-		double _{0};
-		double decPart {modf((max - min) / this->tileSize, &_)};
-		if(decPart > 0.5)
-		{
-			decPart = 1 - decPart;
-		}
-		if(decPart > 0.0001)
-		{
-			std::cerr << "The lattice doesn't have integer tile count in dimension " << dim << ".";
-			std::cout << decPart << std::endl;
-		}
-	}};
-	check(this->xMin, this->xMax, 'x');
-	check(this->yMin, this->yMax, 'y');
-	check(this->zMin, this->zMax, 'z');
+	checkDimension(xMin, xMax, 'x');
+	checkDimension(yMin, yMax, 'y');
+	checkDimension(zMin, zMax, 'z');
 }
 
 const int Lattice::getNumRows() const
@@ -38,22 +24,22 @@ const int Lattice::getNumLayers() const
 
 const float Lattice::getTileSize() const
 {
-	return this->tileSize;
+	return tileSize;
 }
 
 const float Lattice::getXMin() const
 {
-	return this->xMin;
+	return xMin;
 }
 
 const float Lattice::getYMin() const
 {
-	return this->yMin;
+	return yMin;
 }
 
 const float Lattice::getZMin() const
 {
-	return this->zMin;
+	return zMin;
 }
 
 SubLattice* Lattice::subLattice(int i, int total) const
@@ -82,5 +68,19 @@ Layer Lattice::begin() const
 
 Layer Lattice::end() const
 {
-	return Layer{this, this->getNumLayers()};
+	return Layer{this, getNumLayers()};
+}
+
+void Lattice::checkDimension(const float min, const float max, const char dim) const
+{
+	double intpart{0};
+	double decPart{modf((max - min) / tileSize, &intpart)};
+	if(decPart > 0.5)
+	{
+		decPart = 1 - decPart;
+	}
+	if(decPart > 0.0001)
+	{
+		std::cerr << "The lattice doesn't have integer tile count in dimension " << dim << ".";
+	}
 }

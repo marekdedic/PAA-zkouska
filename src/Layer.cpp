@@ -2,12 +2,12 @@
 
 const bool Layer::operator!=(const Layer& other) const
 {
-	return this->lattice != other.lattice || this->layer != other.layer;
+	return lattice != other.lattice || layer != other.layer;
 }
 
 Layer* Layer::operator++()
 {
-	++this->layer;
+	++layer;
 	return this;
 }
 
@@ -23,17 +23,17 @@ Column Layer::begin() const
 
 Column Layer::end() const
 {
-	return Column{this, this->lattice->getNumCols()};
+	return Column{this, lattice->getNumCols()};
 }
 
 const LatticeInterface* Layer::getLattice() const
 {
-	return this->lattice;
+	return lattice;
 }
 
 const int Layer::getLayer() const
 {
-	return this->layer;
+	return layer;
 }
 
 Layer::Layer(const LatticeInterface* lattice, const int layer) : lattice{lattice}, layer{layer}

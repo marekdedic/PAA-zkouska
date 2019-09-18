@@ -2,8 +2,7 @@
 
 #include "global.hpp"
 
-using vec = std::array<float, 3>;
-
+#include "vec.hpp"
 #include "Direction.hpp"
 #include "Tile.hpp"
 #include "Column.hpp"

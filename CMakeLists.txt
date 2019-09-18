@@ -26,6 +26,7 @@ set(HEADER_FILES
 	include/Layer.hpp
 	include/SubLattice.hpp
 	include/LatticeInterface.hpp
+	include/vec.hpp
 )
 
 set(SOURCE_FILES
@@ -37,6 +38,7 @@ set(SOURCE_FILES
 	src/Layer.cpp
 	src/SubLattice.cpp
 	src/LatticeInterface.cpp
+	src/vec.cpp
 )
 
 add_executable(PAA ${HEADER_FILES} ${SOURCE_FILES})
