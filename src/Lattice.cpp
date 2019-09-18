@@ -58,13 +58,21 @@ const float Lattice::getZMin() const
 
 SubLattice* Lattice::subLattice(int i, int total) const
 {
-	float sxMin{xMin + tileSize * round(round((xMax - xMin) / tileSize) / total) * i};
-	float sxMax{i == total - 1 ? xMax : xMin + tileSize * round(round((xMax - xMin) / tileSize) / total) * (i + 1)};
-	float syMin{yMin + tileSize * round(round((yMax - yMin) / tileSize) / total) * i};
-	float syMax{i == total - 1 ? yMax : yMin + tileSize * round(round((yMax - yMin) / tileSize) / total) * (i + 1)};
+	if((xMax - xMin) >= (yMax - yMin) and (xMax - xMin) >= (zMax - zMin))
+	{
+		float sxMin{xMin + tileSize * round(round((xMax - xMin) / tileSize) / total) * i};
+		float sxMax{i == total - 1 ? xMax : xMin + tileSize * round(round((xMax - xMin) / tileSize) / total) * (i + 1)};
+		return new SubLattice{this, sxMin, sxMax, yMin, yMax, zMin, zMax};
+	}
+	if((yMax - yMin) >= (zMax - zMin))
+	{
+		float syMin{yMin + tileSize * round(round((yMax - yMin) / tileSize) / total) * i};
+		float syMax{i == total - 1 ? yMax : yMin + tileSize * round(round((yMax - yMin) / tileSize) / total) * (i + 1)};
+		return new SubLattice{this, xMin, xMax, syMin, syMax, zMin, zMax};
+	}
 	float szMin{zMin + tileSize * round(round((zMax - zMin) / tileSize) / total) * i};
 	float szMax{i == total - 1 ? zMax : zMin + tileSize * round(round((zMax - zMin) / tileSize) / total) * (i + 1)};
-	return new SubLattice{this, sxMin, sxMax, syMin, syMax, szMin, szMax};
+	return new SubLattice{this, xMin, xMax, yMin, yMax, szMin, szMax};
 }
 
 Layer Lattice::begin() const
