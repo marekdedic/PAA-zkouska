@@ -24,7 +24,7 @@ public:
 	static bool pointInTriangle(stl_reader::StlMesh<float, unsigned int>* mesh, const size_t ti, vec point);
 	void intersect(stl_reader::StlMesh<float, unsigned int>* mesh, const size_t ti);
 	void intersectAll(stl_reader::StlMesh<float, unsigned int>* mesh);
-	void write(vtkSmartPointer<vtkPoints> points, vtkSmartPointer<vtkCellArray> lines) const;
+	void write(std::vector<std::pair<vec, vec>>& output) const;
 private:
 	friend Tile;
 	static unsigned int pointCounter;
