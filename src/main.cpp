@@ -1,29 +1,5 @@
 #include "main.hpp"
 
-vec StlToVec(const float* stlVec)
-{
-	return {*stlVec, *(stlVec + 1), *(stlVec + 2)};
-}
-
-vec vecMinus(vec a, vec b)
-{
-	return {a[0] - b[0], a[1] - b[1], a[2] - b[2]};
-}
-float scalarProduct(vec a, vec b)
-{
-	return a[0] * b[0] + a[1] * b[1] + a[2] * b[2];
-}
-
-float intersect(vec planePoint, vec linePoint, vec planeNormal, vec lineVec)
-{
-	float denominator{scalarProduct(lineVec, planeNormal)};
-	if(denominator == 0)
-	{
-		return 0;
-	}
-	return scalarProduct(vecMinus(planePoint, linePoint), planeNormal) / denominator;
-}
-
 int main()
 {
 	stl_reader::StlMesh<float, unsigned int>* mesh{new stl_reader::StlMesh{"teapot.stl"}};
