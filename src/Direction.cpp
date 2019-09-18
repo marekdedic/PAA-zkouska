@@ -1,7 +1,5 @@
 #include "main.hpp"
 
-unsigned int Direction::pointCounter = 0;
-
 const bool Direction::operator!=(const Direction& other) const
 {
 	return tile != other.tile || direction != other.direction || length != other.length;
@@ -187,18 +185,10 @@ void Direction::intersectAll(stl_reader::StlMesh<float, unsigned int> *mesh)
 	}
 }
 
-void Direction::write(vtkSmartPointer<vtkPoints> points, vtkSmartPointer<vtkCellArray> lines) const
+void Direction::write(std::vector<std::pair<vec, vec>>& output) const
 {
 	vec center{tile->getCenter()};
-	vec endPoint{vecPlus(center, vecTimes(length, getVec()))};
-	points->InsertNextPoint(center[0], center[1], center[2]);
-	points->InsertNextPoint(endPoint[0], endPoint[1], endPoint[2]);
-
-	vtkSmartPointer<vtkLine> line{vtkSmartPointer<vtkLine>::New()};
-	line->GetPointIds()->SetId(0, pointCounter);
-	line->GetPointIds()->SetId(1, pointCounter + 1);
-	lines->InsertNextCell(line);
-	pointCounter += 2;
+	output.emplace_back(center, vecPlus(center, vecTimes(length, getVec())));
 }
 
 Direction::Direction(const Tile *tile, const int direction) : tile{tile}, direction{direction}, length{0}
