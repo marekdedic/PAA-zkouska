@@ -29,7 +29,7 @@ int main()
 
 	vtkSmartPointer<vtkPoints> points{vtkSmartPointer<vtkPoints>::New()};
 	vtkSmartPointer<vtkCellArray> lines{vtkSmartPointer<vtkCellArray>::New()};
-	unsigned int pointCounter{};
+	unsigned int pointCounter{0};
 	for(auto arrow: output)
 	{
 		points->InsertNextPoint(arrow.first[0], arrow.first[1], arrow.first[2]);
