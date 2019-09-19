@@ -92,7 +92,7 @@ void Direction::setLength()
 		case 19:
 		case 23:
 		case 25:
-			length = 1.7320508075688772; // sqrt(3)
+			length = 1.7320508075688772/2; // sqrt(3)
 			break;
 		case 1:
 		case 3:
@@ -106,7 +106,7 @@ void Direction::setLength()
 		case 20:
 		case 22:
 		case 24:
-			length = 1.4142135623730951; // sqrt(2)
+			length = 1.4142135623730951/2; // sqrt(2)
 			break;
 		case 4:
 		case 10:
@@ -114,7 +114,7 @@ void Direction::setLength()
 		case 13:
 		case 15:
 		case 21:
-			length = 1;
+			length = 1.0/2;
 			break;
 		default:
 			length = 0;
