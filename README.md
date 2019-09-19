@@ -63,7 +63,7 @@ For a more theoretical analysis of the algorithm, we can state that if `n` is th
 
 This would make the algorithm cost efficient (it does not, as will be shown later).
 
-# Efficient multi-threaded algorithm
+### Efficient multi-threaded algorithm
 
 Even though the naive algorithm may be cost efficient, spawning thousand of threads is generaly not a good idea. As a result, when running the previous experiment, the whole machine froze for its duration and afterwards reported a load average of 3000.
 
@@ -78,3 +78,21 @@ This gives the following result:
 ```
 
 The result is quite surprisingly worse then the previous experiment. This could be attributed to the uneven division of the lattice and is likely skewed by the relatively light-weight thread spawning on Linux.
+
+## Possible expansions
+
+### Faster sequential algorithm
+
+The brute-force approach used even in the optimised sequential implementation still has a complexity of `O (n^3)`. However, it might not make sense to calculate the intersection of each triangle with each line - if this could be averted, the algorithm could run much faster.
+
+An idea for an approch is as follows:
+
+- compute an axis-aligned bounding box (AABB) for each triangle.
+- Find all the tiles the AABB intersects with. This effectively boils down to a search similar to a Kd-tree or a range tree, but on a lattice instead of a set of points.
+- intersect only the arrows from tiles intersecting the AABB
+
+This and similar algorithms will probably be much faster than the one implemented. This is the reason the parallel algorithms presented may not be cost efficient, gven that cost-efficiency should always be computed against the *best* sequential algorithm.
+
+### SIMD
+
+Having lots of linear algebra and lots of similar operations (line-plane intersections and point-in-triangle checks) could make this problem an ideal candidate for SIMD.
