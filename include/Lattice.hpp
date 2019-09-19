@@ -18,6 +18,7 @@ public:
 	virtual const float getYMin() const;
 	virtual const float getZMin() const;
 	SubLattice* subLattice(int i, int total) const;
+	SubLattice* intersect(std::pair<vec, vec>& aabb) const;
 private:
 	const float xMin;
 	const float xMax;

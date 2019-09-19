@@ -61,6 +61,17 @@ SubLattice* Lattice::subLattice(int i, int total) const
 	return new SubLattice{this, xMin, xMax, yMin, yMax, szMin, szMax};
 }
 
+SubLattice* Lattice::intersect(std::pair<vec, vec>& aabb) const
+{
+	float sxMin{xMin + tileSize * floor((aabb.first[0] - xMin) / tileSize)};
+	float syMin{yMin + tileSize * floor((aabb.first[1] - yMin) / tileSize)};
+	float szMin{zMin + tileSize * floor((aabb.first[2] - zMin) / tileSize)};
+	float sxMax{xMin + tileSize * ceil((aabb.second[0] - xMin) / tileSize)};
+	float syMax{yMin + tileSize * ceil((aabb.second[1] - yMin) / tileSize)};
+	float szMax{zMin + tileSize * ceil((aabb.second[2] - zMin) / tileSize)};
+	return new SubLattice{this, sxMin, sxMax, syMin, syMax, szMin, szMax};
+}
+
 Layer Lattice::begin() const
 {
 	return Layer{this, 0};
