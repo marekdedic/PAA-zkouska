@@ -93,6 +93,10 @@ An idea for an approch is as follows:
 
 This and similar algorithms will probably be much faster than the one implemented. This is the reason the parallel algorithms presented may not be cost efficient, gven that cost-efficiency should always be computed against the *best* sequential algorithm.
 
+```sh
+./PAA  306,24s user 0,05s system 99% cpu 5:06,40 total
+```
+
 ### SIMD
 
 Having lots of linear algebra and lots of similar operations (line-plane intersections and point-in-triangle checks) could make this problem an ideal candidate for SIMD.
