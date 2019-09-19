@@ -4,6 +4,7 @@ class LatticeInterface;
 class Lattice;
 class SubLattice;
 class Column;
+class SubLayer;
 
 class Layer
 {
@@ -22,6 +23,7 @@ public:
 private:
 	friend Lattice;
 	friend SubLattice;
+	friend SubLayer;
 
 	std::vector<Column*> columns;
 	const LatticeInterface* lattice;

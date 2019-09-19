@@ -9,4 +9,5 @@
 #include "Layer.hpp"
 #include "LatticeInterface.hpp"
 #include "SubLattice.hpp"
+#include "SubLayer.hpp"
 #include "Lattice.hpp"

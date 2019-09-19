@@ -1,21 +1,27 @@
 #include "main.hpp"
 
 SubLattice::SubLattice(const Lattice *lattice, const int xMin, const int xMax, const int yMin, const int yMax, const int zMin, const int zMax): lattice{lattice}, xMin{xMin}, xMax{xMax}, yMin{yMin}, yMax{yMax}, zMin{zMin}, zMax{zMax}
-{}
-
-Layer* SubLattice::begin() const
 {
-	return lattice->layers.at(xMin);
+
 }
 
-Layer* SubLattice::end() const
+SubLayer* SubLattice::begin() const
 {
-	return lattice->layers.at(xMax);
+	return new SubLayer{lattice->layers.at(xMin), yMin, yMax, zMin, zMax};
 }
 
-Layer* SubLattice::next(Layer *current) const
+SubLayer* SubLattice::end() const
 {
-	return lattice->next(current);
+	return new SubLayer{lattice->layers.at(xMax), yMin, yMax, zMin, zMax};
+}
+
+SubLayer* SubLattice::next(SubLayer *current) const
+{
+	if(lattice->next(current->layer) == nullptr)
+	{
+		return nullptr;
+	}
+	return new SubLayer{lattice->next(current->layer), yMin, yMax, zMin, zMax};
 }
 
 const int SubLattice::getNumRows() const

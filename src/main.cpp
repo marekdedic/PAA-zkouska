@@ -72,7 +72,7 @@ int main()
 	{
 		std::pair<vec, vec> aabb = find_aabb(mesh, ti);
 			SubLattice* subLattice{lattice.intersect(aabb)};
-			for(Layer* layer{subLattice->begin()}; layer != nullptr; layer = subLattice->next(layer))
+			for(SubLayer* layer{subLattice->begin()}; layer != nullptr; layer = subLattice->next(layer))
 			{
 				for(Column* column{layer->begin()}; column != nullptr; column = layer->next(column))
 				{
