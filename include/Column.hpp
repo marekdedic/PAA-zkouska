@@ -11,13 +11,15 @@ public:
 	const bool operator!=(const Column& other) const;
 	Column* operator++();
 	Column& operator*();
-	Tile begin() const;
-	Tile end() const;
+	Tile* begin() const;
+	Tile* end() const;
+	Tile* next(Tile* current) const;
 	const Layer* getLayer() const;
 	const int getColumn() const;
 private:
 	friend Layer;
 
+	std::vector<Tile*> tiles;
 	const Layer* layer;
 	int column;
 

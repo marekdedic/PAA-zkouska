@@ -8,9 +8,10 @@ public:
 	SubLattice() = delete;
 	SubLattice(const SubLattice&) = delete;
 	SubLattice& operator=(const SubLattice&) = delete;
-	SubLattice(const Lattice* lattice, const float xMin, const float xMax, const float yMin, const float yMax, const float zMin, const float zMax);
-	Layer begin() const;
-	Layer end() const;
+	SubLattice(const Lattice* lattice, const int xMin, const int xMax, const int yMin, const int yMax, const int zMin, const int zMax);
+	Layer* begin() const;
+	Layer* end() const;
+	Layer* next(Layer* current) const;
 
 	virtual const int getNumRows() const; // Rows along X
 	virtual const int getNumCols() const; // Cols along Y
@@ -21,10 +22,10 @@ public:
 	virtual const float getTileSize() const;
 private:
 	const Lattice* lattice;
-	const float xMin;
-	const float xMax;
-	const float yMin;
-	const float yMax;
-	const float zMin;
-	const float zMax;
+	const int xMin;
+	const int xMax;
+	const int yMin;
+	const int yMax;
+	const int zMin;
+	const int zMax;
 };

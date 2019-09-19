@@ -72,22 +72,36 @@ int main()
 	{
 		std::pair<vec, vec> aabb = find_aabb(mesh, ti);
 			SubLattice* subLattice{lattice.intersect(aabb)};
-			for(auto layer: *subLattice)
+			for(Layer* layer{subLattice->begin()}; layer != nullptr; layer = subLattice->next(layer))
 			{
-				for(auto column : layer)
+				for(Column* column{layer->begin()}; column != nullptr; column = layer->next(column))
 				{
-					for(auto tile : column)
+					for(Tile* tile{column->begin()}; tile != nullptr; tile = column->next(tile))
 					{
-						for(auto direction : tile)
+						for(Direction* direction{tile->begin()}; direction != nullptr; direction = tile->next(direction))
 						{
-							direction.intersect(mesh, ti);
+							direction->intersect(mesh, ti);
 							//m.lock();
-							direction.write(output);
+							//direction.write(output);
 							//m.unlock();
 						}
 					}
 				}
 			}
+	}
+
+	for(Layer* layer{lattice.begin()}; layer != nullptr; layer = lattice.next(layer))
+	{
+		for(Column* column{layer->begin()}; column != nullptr; column = layer->next(column))
+		{
+			for(Tile* tile{column->begin()}; tile != nullptr; tile = column->next(tile))
+			{
+				for(Direction* direction{tile->begin()}; direction != nullptr; direction = tile->next(direction))
+				{
+					direction->write(output);
+				}
+			}
+		}
 	}
 
 		//}});

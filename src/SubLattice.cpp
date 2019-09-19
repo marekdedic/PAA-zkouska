@@ -1,41 +1,46 @@
 #include "main.hpp"
 
-SubLattice::SubLattice(const Lattice *lattice, const float xMin, const float xMax, const float yMin, const float yMax, const float zMin, const float zMax): lattice{lattice}, xMin{xMin}, xMax{xMax}, yMin{yMin}, yMax{yMax}, zMin{zMin}, zMax{zMax}
+SubLattice::SubLattice(const Lattice *lattice, const int xMin, const int xMax, const int yMin, const int yMax, const int zMin, const int zMax): lattice{lattice}, xMin{xMin}, xMax{xMax}, yMin{yMin}, yMax{yMax}, zMin{zMin}, zMax{zMax}
 {}
 
-Layer SubLattice::begin() const
+Layer* SubLattice::begin() const
 {
-	return Layer{this, 0};
+	return lattice->layers.at(xMin);
 }
 
-Layer SubLattice::end() const
+Layer* SubLattice::end() const
 {
-	return Layer{this, this->getNumLayers()};
+	return lattice->layers.at(xMax);
+}
+
+Layer* SubLattice::next(Layer *current) const
+{
+	return lattice->next(current);
 }
 
 const int SubLattice::getNumRows() const
 {
-	return static_cast<int>(round((xMax - xMin) / lattice->getTileSize()));
+	return xMax - xMin;
 }
 const int SubLattice::getNumCols() const
 {
-	return static_cast<int>(round((yMax - yMin) / lattice->getTileSize()));
+	return yMax - yMin;
 }
 const int SubLattice::getNumLayers() const
 {
-	return static_cast<int>(round((zMax - zMin) / lattice->getTileSize()));
+	return zMax - zMin;
 }
 const float SubLattice::getXMin() const
 {
-	return xMin;
+	return lattice->getXMin() + xMin * getTileSize();
 }
 const float SubLattice::getYMin() const
 {
-	return yMin;
+	return lattice->getYMin() + yMin * getTileSize();
 }
 const float SubLattice::getZMin() const
 {
-	return zMin;
+	return lattice->getZMin() + zMin * getTileSize();
 }
 const float SubLattice::getTileSize() const
 {

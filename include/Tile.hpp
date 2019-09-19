@@ -11,14 +11,16 @@ public:
 	const bool operator!=(const Tile& other) const;
 	Tile* operator++();
 	Tile& operator*();
-	Direction begin() const;
-	Direction end() const;
+	Direction* begin() const;
+	Direction* end() const;
+	Direction* next(Direction* current) const;
 
 	const Column* getColumn() const;
 	const vec getCenter() const;
 private:
 	friend Column;
 
+	std::vector<Direction*> directions;
 	const Column* column;
 	int tile;
 	vec center;

@@ -1,13 +1,22 @@
 #include "main.hpp"
 
-Direction Tile::begin() const
+Direction* Tile::begin() const
 {
-	return Direction{this, 0};
+	return directions.front();
 }
 
-Direction Tile::end() const
+Direction* Tile::end() const
 {
-	return Direction{this, 26};
+	return directions.back();
+}
+
+Direction* Tile::next(Direction *current) const
+{
+	if(current == end())
+	{
+		return nullptr;
+	}
+	return *std::next(std::find(directions.begin(), directions.end(), current));
 }
 
 const bool Tile::operator!=(const Tile& other) const
@@ -37,9 +46,14 @@ const vec Tile::getCenter() const
 	return center;
 }
 
-Tile::Tile(const Column* column, const int tile) : column{column}, tile{tile}, center{0, 0, 0}
+Tile::Tile(const Column* column, const int tile) : column{column}, tile{tile}, center{0, 0, 0}, directions{}
 {
 	setCenter();
+	directions.reserve(26);
+	for(int i{0}; i < 26; ++i)
+	{
+		directions.emplace_back(new Direction{this, i});
+	}
 }
 
 void Tile::setCenter()

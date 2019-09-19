@@ -1,10 +1,16 @@
 #include "main.hpp"
 
-Lattice::Lattice(float xMin, float xMax, float yMin, float yMax, float zMin, float zMax, float tileSize) : xMin{xMin}, xMax{xMax}, yMin{yMin}, yMax{yMax}, zMin{zMin}, zMax{zMax}, tileSize{tileSize}
+Lattice::Lattice(float xMin, float xMax, float yMin, float yMax, float zMin, float zMax, float tileSize) : layers{}, xMin{xMin}, xMax{xMax}, yMin{yMin}, yMax{yMax}, zMin{zMin}, zMax{zMax}, tileSize{tileSize}
 {
 	checkDimension(xMin, xMax, 'x');
 	checkDimension(yMin, yMax, 'y');
 	checkDimension(zMin, zMax, 'z');
+
+	layers.reserve(getNumLayers());
+	for(int i{0}; i < getNumLayers(); ++i)
+	{
+		layers.emplace_back(new Layer{this, i});
+	}
 }
 
 const int Lattice::getNumRows() const
@@ -42,6 +48,7 @@ const float Lattice::getZMin() const
 	return zMin;
 }
 
+/*
 SubLattice* Lattice::subLattice(int i, int total) const
 {
 	if((xMax - xMin) >= (yMax - yMin) and (xMax - xMin) >= (zMax - zMin))
@@ -60,26 +67,36 @@ SubLattice* Lattice::subLattice(int i, int total) const
 	float szMax{i == total - 1 ? zMax : zMin + tileSize * round(round((zMax - zMin) / tileSize) / total) * (i + 1)};
 	return new SubLattice{this, xMin, xMax, yMin, yMax, szMin, szMax};
 }
+ */
 
 SubLattice* Lattice::intersect(std::pair<vec, vec>& aabb) const
 {
-	float sxMin{xMin + tileSize * floor((aabb.first[0] - xMin) / tileSize)};
-	float syMin{yMin + tileSize * floor((aabb.first[1] - yMin) / tileSize)};
-	float szMin{zMin + tileSize * floor((aabb.first[2] - zMin) / tileSize)};
-	float sxMax{xMin + tileSize * ceil((aabb.second[0] - xMin) / tileSize)};
-	float syMax{yMin + tileSize * ceil((aabb.second[1] - yMin) / tileSize)};
-	float szMax{zMin + tileSize * ceil((aabb.second[2] - zMin) / tileSize)};
+	int sxMin{static_cast<int>(floor((aabb.first[0] - xMin) / tileSize))};
+	int syMin{static_cast<int>(floor((aabb.first[1] - yMin) / tileSize))};
+	int szMin{static_cast<int>(floor((aabb.first[2] - zMin) / tileSize))};
+	int sxMax{static_cast<int>(floor((aabb.second[0] - xMin) / tileSize))};
+	int syMax{static_cast<int>(floor((aabb.second[1] - yMin) / tileSize))};
+	int szMax{static_cast<int>(floor((aabb.second[2] - zMin) / tileSize))};
 	return new SubLattice{this, sxMin, sxMax, syMin, syMax, szMin, szMax};
 }
 
-Layer Lattice::begin() const
+Layer* Lattice::begin() const
 {
-	return Layer{this, 0};
+	return layers.front();
 }
 
-Layer Lattice::end() const
+Layer* Lattice::end() const
 {
-	return Layer{this, getNumLayers()};
+	return layers.back();
+}
+
+Layer* Lattice::next(Layer *current) const
+{
+	if(current == end())
+	{
+		return nullptr;
+	}
+	return *std::next(std::find(layers.begin(), layers.end(), current));
 }
 
 void Lattice::checkDimension(const float min, const float max, const char dim) const

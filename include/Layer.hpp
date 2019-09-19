@@ -14,14 +14,16 @@ public:
 	const bool operator!=(const Layer& other) const;
 	Layer* operator++();
 	Layer& operator*();
-	Column begin() const;
-	Column end() const;
+	Column* begin() const;
+	Column* end() const;
+	Column* next(Column* current) const;
 	const LatticeInterface* getLattice() const;
 	const int getLayer() const;
 private:
 	friend Lattice;
 	friend SubLattice;
 
+	std::vector<Column*> columns;
 	const LatticeInterface* lattice;
 	int layer;
 
