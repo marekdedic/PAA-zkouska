@@ -1,9 +1,7 @@
 #include "main.hpp"
 
 SubLattice::SubLattice(const Lattice *lattice, const int xMin, const int xMax, const int yMin, const int yMax, const int zMin, const int zMax): lattice{lattice}, xMin{xMin}, xMax{xMax}, yMin{yMin}, yMax{yMax}, zMin{zMin}, zMax{zMax}
-{
-
-}
+{}
 
 SubLayer* SubLattice::begin() const
 {
